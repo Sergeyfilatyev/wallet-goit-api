@@ -6,7 +6,7 @@ const { auth } = require("../../middlewares");
 
 const asyncHandler = require("express-async-handler");
 
-const { logout } = require("../../controllers/users");
+const logout = require("../../controllers/users");
 
 router.post("/logout", auth, asyncHandler(logout));
 
