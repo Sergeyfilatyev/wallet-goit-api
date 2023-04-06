@@ -1,10 +1,14 @@
 const { logoutController } = require("./users");
 const { registerController } = require("./users");
+const { loginController } = require("./users");
 const {
   addTransactionController,
   updateTransactionController,
   deleteTransactionController,
 } = require("./transactions");
+
+
+
 
 module.exports = {
   logoutController,
@@ -12,4 +16,5 @@ module.exports = {
   addTransactionController,
   updateTransactionController,
   deleteTransactionController,
+  loginController,
 };
