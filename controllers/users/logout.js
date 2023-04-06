@@ -1,7 +1,6 @@
 const logoutController = (req, res) => {
   const { id } = req.params;
 
-  //   await logout(id);
   const logout = async (id) => {
     const user = await User.findOne(id);
 
@@ -14,18 +13,22 @@ const logoutController = (req, res) => {
     }
     try {
       user.token = null;
-      const updatedUser = await User.save();
+      await user.save();
 
       return res.status(202).json({
-        message: "No content",
-        data: updatedUser,
+        message: "Logout successful",
       });
     } catch (err) {
-      console.log(error.message);
+      console.error(err.message);
+      return res.status(500).json({
+        status: "error",
+        code: 500,
+        message: "Internal server error",
+      });
     }
   };
 
-  return res.json({ status: "success" });
+  logout(id);
 };
 
 module.exports = logoutController;
