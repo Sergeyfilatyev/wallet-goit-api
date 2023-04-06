@@ -1,3 +1,4 @@
+const { User } = require("../../models/");
 const logoutController = (req, res) => {
   const { id } = req.params;
 

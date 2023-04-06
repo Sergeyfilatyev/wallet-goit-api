@@ -1,3 +1,4 @@
-const logout = require("./logout");
+const logoutController = require("./logoutController");
+const registerController = require("./registerController");
 
-module.exports = logout;
+module.exports = { logoutController, registerController };
