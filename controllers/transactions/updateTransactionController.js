@@ -1,4 +1,5 @@
 const { Transaction } = require("../../models");
+const { RequestError } = require("../../helpers");
 
 const updateTransactionController = async (req, res) => {
   const { transactionId: id } = req.params;
@@ -7,7 +8,7 @@ const updateTransactionController = async (req, res) => {
   });
 
   if (!updatedTransaction) {
-    return res.status(404).json({ message: "Not found" });
+    throw RequestError(404, "Not found!");
   }
 
   return res.status(200).json(updatedTransaction);

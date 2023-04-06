@@ -1,9 +1,11 @@
 const express = require("express");
-const { addTransactionController, updateTransactionController } = require("../../controllers/transactions");
+const controllerWrapper = require("../../helpers/controllerWrapper");
+const { addTransactionController, updateTransactionController, deleteTransactionController } = require("../../controllers");
 
 const transactionRouter = express.Router();
 
-transactionRouter.post("/", addTransactionController);
-transactionRouter.patch("/:transactionId", updateTransactionController);
+transactionRouter.post("/", controllerWrapper(addTransactionController));
+transactionRouter.patch("/:transactionId", controllerWrapper(updateTransactionController));
+transactionRouter.delete("/:transactionId", controllerWrapper(deleteTransactionController))
 
 module.exports = transactionRouter;
