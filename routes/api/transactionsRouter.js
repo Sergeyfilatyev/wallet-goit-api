@@ -7,13 +7,22 @@ const {
   deleteTransactionController,
   getTransactionController,
 } = require("../../controllers");
+const { validateBody } = require("../../helpers");
+const { addTransaction, editTransaction } = require("../../schemas");
 
 const transactionRouter = express.Router();
 
 transactionRouter.get("/", controllerWrapper(getAllTransactionsController));
-transactionRouter.post("/", controllerWrapper(addTransactionController));
+
+transactionRouter.post(
+  "/",
+  validateBody(addTransaction),
+  controllerWrapper(addTransactionController)
+);
+
 transactionRouter.patch(
   "/:transactionId",
+  validateBody(editTransaction),
   controllerWrapper(updateTransactionController)
 );
 transactionRouter.delete(
