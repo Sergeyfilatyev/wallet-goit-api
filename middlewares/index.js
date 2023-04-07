@@ -1,3 +1,6 @@
+
+const authentificate = require("./authentificate");
 const auth = require("./auth");
 
-module.exports = { auth };
+module.exports = { auth,authentificate };
+
