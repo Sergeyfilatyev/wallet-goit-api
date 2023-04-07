@@ -17,7 +17,7 @@ const addExpenceTransaction = Joi.object({
 });
 
 const editTransaction = Joi.object({
-  id: Joi.string.required(),
+  id: Joi.string().required(),
   type: Joi.boolean(),
   amount: Joi.number(),
   category: Joi.string(), //add existing categories
@@ -27,7 +27,7 @@ const editTransaction = Joi.object({
 //at least one of the fields should be edited
 
 const deleteTransaction = Joi.object({
-  id: Joi.string.required(),
+  id: Joi.string().required(),
 });
 
 module.exports = {
