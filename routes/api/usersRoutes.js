@@ -6,9 +6,10 @@ const {
   loginController,
 } = require("../../controllers/");
 const controllerWrapper = require("../../helpers/controllerWrapper");
+const { auth } = require("../../middlewares");
 
 router.post("/register", controllerWrapper(registerController));
 router.post("/login", controllerWrapper(loginController));
-router.get("/logout/:id", controllerWrapper(logoutController));
+router.get("/logout", auth, controllerWrapper(logoutController));
 
 module.exports = router;
