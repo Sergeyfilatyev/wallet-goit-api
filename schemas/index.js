@@ -1,16 +1,10 @@
 const { registerUserSchema, loginUserSchema } = require("./user");
-const {
-  addIncomeTransaction,
-  addExpenceTransaction,
-  editTransaction,
-  deleteTransaction,
-} = require("./transaction");
+const { addTransaction, editTransaction } = require("./transaction");
 
 module.exports = {
   registerUserSchema,
   loginUserSchema,
-  addIncomeTransaction,
-  addExpenceTransaction,
+
+  addTransaction,
   editTransaction,
-  deleteTransaction,
 };
