@@ -2,7 +2,7 @@ const {
   logoutController,
   registerController,
   loginController,
-  getCurrentUser,
+  getCurrentUserController,
 } = require("./users");
 
 const {
@@ -17,5 +17,5 @@ module.exports = {
   updateTransactionController,
   deleteTransactionController,
   loginController,
-  getCurrentUser,
+  getCurrentUserController,
 };
