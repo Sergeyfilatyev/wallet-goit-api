@@ -1,17 +1,17 @@
 const express = require("express");
 const controllerWrapper = require("../../helpers/controllerWrapper");
 const {
+  getAllTransactionsController,
   addTransactionController,
   updateTransactionController,
   deleteTransactionController,
   getTransactionController,
 } = require("../../controllers");
 
-const { auth } = require("../../middlewares");
-
 const transactionRouter = express.Router();
 
-transactionRouter.post("/", auth, controllerWrapper(addTransactionController));
+transactionRouter.get("/", controllerWrapper(getAllTransactionsController));
+transactionRouter.post("/", controllerWrapper(addTransactionController));
 transactionRouter.patch(
   "/:transactionId",
   controllerWrapper(updateTransactionController)

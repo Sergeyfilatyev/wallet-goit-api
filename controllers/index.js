@@ -10,9 +10,13 @@ const {
   updateTransactionController,
   deleteTransactionController,
   getTransactionController,
+  getCategoryTransactionController,
+  getAllTransactionsController,
 } = require("./transactions");
 
+
 const { getCategoriesController } = require("./categories");
+
 
 module.exports = {
   logoutController,
@@ -21,10 +25,9 @@ module.exports = {
   updateTransactionController,
   deleteTransactionController,
   loginController,
-
   getCurrentUser,
-
   getTransactionController,
+  getCategoryTransactionController,
+  getAllTransactionsController,
   getCategoriesController,
-
 };
