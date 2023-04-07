@@ -2,6 +2,7 @@ const {
   logoutController,
   registerController,
   loginController,
+  getCurrentUser,
 } = require("./users");
 
 const {
@@ -9,6 +10,7 @@ const {
   updateTransactionController,
   deleteTransactionController,
   getTransactionController,
+  getAllTransactionsController,
 } = require("./transactions");
 
 const { getCategoriesController } = require("./categories");
@@ -20,6 +22,8 @@ module.exports = {
   updateTransactionController,
   deleteTransactionController,
   loginController,
+  getCurrentUser,
   getTransactionController,
+  getAllTransactionsController,
   getCategoriesController,
 };
