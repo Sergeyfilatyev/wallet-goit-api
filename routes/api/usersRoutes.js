@@ -11,7 +11,11 @@ const { auth } = require("../../middlewares");
 
 router.post("/register", controllerWrapper(registerController));
 router.post("/login", controllerWrapper(loginController));
+
+router.get("/logout", auth, controllerWrapper(logoutController));
+
 router.get("/current", auth, controllerWrapper(getCurrentUser));
-router.get("/logout/", controllerWrapper(logoutController));
+
+
 
 module.exports = router;
