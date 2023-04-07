@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-
+const { handleError } = require("../helpers");
 const userSchema = new Schema(
   {
     name: {
@@ -13,7 +13,6 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: [true, "Email is required"],
-      unique: true,
     },
     token: {
       type: String,
@@ -24,9 +23,9 @@ const userSchema = new Schema(
       default: 0,
     },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
-
+userSchema.post("save", handleError);
 const User = model("user", userSchema);
 
 module.exports = User;

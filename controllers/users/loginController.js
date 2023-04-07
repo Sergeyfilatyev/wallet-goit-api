@@ -13,7 +13,7 @@ const loginController = async (req, res) => {
 
   const user = await User.findOne({ email });
   if (!user) {
-    throw RequestError(401, "User not exists!");
+    throw RequestError(401, "Email or password is wrong");
   }
 
   const passwordCompare = await bCrypt.compareSync(password, user.password);
@@ -33,6 +33,7 @@ const loginController = async (req, res) => {
     user: {
       name: user.name,
       email,
+      id: user._id,
     },
   });
 };

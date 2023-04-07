@@ -1,5 +1,5 @@
 const { Schema, model, SchemaTypes } = require("mongoose");
-
+const { handleError } = require("../helpers");
 const transactionSchema = new Schema(
   {
     amount: {
@@ -30,17 +30,18 @@ const transactionSchema = new Schema(
       default: "",
     },
     date: {
-      type: Date,
-      default: Date.now(),
+      type: String,
+      default: new Date().toLocaleString(),
     },
     owner: {
       type: SchemaTypes.ObjectId,
       ref: "user",
+      required: true,
     },
   },
-  { versionKey: false }
+  { versionKey: false, timestamps: true }
 );
-
+transactionSchema.post("save", handleError);
 const Transaction = model("transaction", transactionSchema);
 
 module.exports = Transaction;

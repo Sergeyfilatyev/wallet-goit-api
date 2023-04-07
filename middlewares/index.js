@@ -1,3 +1,3 @@
-const authentificate = require("./authentificate");
+const auth = require("./auth");
 
-module.exports = { authentificate };
+module.exports = { auth };
