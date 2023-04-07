@@ -1,4 +1,4 @@
-const getCurrentUser = async (req, res) => {
+const getCurrentUserController = async (req, res) => {
   const { email, name, balance } = req.user;
 
   res.json({
@@ -8,4 +8,4 @@ const getCurrentUser = async (req, res) => {
   });
 };
 
-module.exports = getCurrentUser;
+module.exports = getCurrentUserController;
