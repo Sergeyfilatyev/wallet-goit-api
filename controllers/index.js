@@ -8,6 +8,8 @@ const {
   addTransactionController,
   updateTransactionController,
   deleteTransactionController,
+  getTransactionController,
+getCategoryTransactionController
 } = require("./transactions");
 module.exports = {
   logoutController,
@@ -16,4 +18,6 @@ module.exports = {
   updateTransactionController,
   deleteTransactionController,
   loginController,
+  getTransactionController,
+getCategoryTransactionController,
 };
