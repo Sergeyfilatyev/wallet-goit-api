@@ -9,8 +9,10 @@ const {
   updateTransactionController,
   deleteTransactionController,
   getTransactionController,
-getCategoryTransactionController
 } = require("./transactions");
+
+const { getCategoriesController } = require("./categories");
+
 module.exports = {
   logoutController,
   registerController,
@@ -19,5 +21,5 @@ module.exports = {
   deleteTransactionController,
   loginController,
   getTransactionController,
-getCategoryTransactionController,
+  getCategoriesController,
 };

@@ -5,7 +5,6 @@ const {
   updateTransactionController,
   deleteTransactionController,
   getTransactionController,
-  getCategoryTransactionController,
 } = require("../../controllers");
 
 const { auth } = require("../../middlewares");
@@ -24,10 +23,6 @@ transactionRouter.delete(
 transactionRouter.get(
   "/:transactionId",
   controllerWrapper(getTransactionController)
-);
-transactionRouter.get(
-  "/category/:transactionId",
-  controllerWrapper(getCategoryTransactionController)
 );
 
 module.exports = transactionRouter;
