@@ -1,4 +1,4 @@
-const { RequestError } = require("./RequestError");
+const RequestError = require("./RequestError");
 
 const validateBody = (schema) => {
   const func = async (req, res, next) => {
