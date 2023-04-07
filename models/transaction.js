@@ -31,7 +31,7 @@ const transactionSchema = new Schema(
     },
     date: {
       type: String,
-      default: Date.now().toString(),
+      default: new Date().toLocaleString(),
     },
     owner: {
       type: SchemaTypes.ObjectId,
