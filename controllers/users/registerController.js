@@ -6,7 +6,7 @@ const registerContoller = async (req, res) => {
   const { name, password, email } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    throw RequestError(409, "Email in use!");
+    throw RequestError(409, "Provided email already exists");
   }
   const hashPassword = await bcrypt.hash(password, 10);
   const newUser = await User.create({ name, password: hashPassword, email });
