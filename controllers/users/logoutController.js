@@ -3,7 +3,7 @@ const logoutController = (req, res) => {
   const { id } = req.params;
 
   const logout = async (id) => {
-    const user = await User.findOne(id);
+    const user = await User.findOne({ id });
 
     if (!user) {
       return res.status(401).json({
