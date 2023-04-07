@@ -1,3 +1,6 @@
+
+const authentificate = require("./authentificate");
 const auth = require("./auth");
-const validateBody = require("./validateBody");
-module.exports = { auth, validateBody };
+
+module.exports = { auth,authentificate };
+

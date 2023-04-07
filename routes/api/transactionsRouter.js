@@ -6,7 +6,6 @@ const {
   updateTransactionController,
   deleteTransactionController,
   getTransactionController,
-  getCategoryTransactionController,
 } = require("../../controllers");
 
 const transactionRouter = express.Router();
@@ -24,10 +23,6 @@ transactionRouter.delete(
 transactionRouter.get(
   "/:transactionId",
   controllerWrapper(getTransactionController)
-);
-transactionRouter.get(
-  "/category/:transactionId",
-  controllerWrapper(getCategoryTransactionController)
 );
 
 module.exports = transactionRouter;
