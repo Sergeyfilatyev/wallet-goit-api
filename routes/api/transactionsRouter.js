@@ -8,9 +8,11 @@ const {
   getCategoryTransactionController,
 } = require("../../controllers");
 
+const { auth } = require("../../middlewares");
+
 const transactionRouter = express.Router();
 
-transactionRouter.post("/", controllerWrapper(addTransactionController));
+transactionRouter.post("/", auth, controllerWrapper(addTransactionController));
 transactionRouter.patch(
   "/:transactionId",
   controllerWrapper(updateTransactionController)
