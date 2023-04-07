@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const addIncomeTransaction = Joi.object({
-  type: Joi.boolean().required(), //есть ли смысл ставить по умолчанию true(income)?
+  type: Joi.boolean().required(),
   amount: Joi.number().required(),
   category: Joi.string(),
   comment: Joi.string(),
@@ -9,7 +9,7 @@ const addIncomeTransaction = Joi.object({
 });
 
 const addExpenceTransaction = Joi.object({
-  type: Joi.boolean().required(), //есть ли смысл ставить по умолчанию true(income)?
+  type: Joi.boolean().required(),
   amount: Joi.number().required(),
   category: Joi.string().required(), //add existing categories
   comment: Joi.string(),
@@ -18,7 +18,7 @@ const addExpenceTransaction = Joi.object({
 
 const editTransaction = Joi.object({
   id: Joi.string.required(),
-  type: Joi.boolean(), //есть ли смысл ставить по умолчанию true(income)?
+  type: Joi.boolean(),
   amount: Joi.number(),
   category: Joi.string(), //add existing categories
   comment: Joi.string(),
