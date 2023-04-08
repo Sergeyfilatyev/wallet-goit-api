@@ -16,7 +16,15 @@ const addTransactionController = async (req, res) => {
   user.balance = user.balance + calculatedNumber;
   user.save();
 
-  return res.status(201).json(newTransaction);
+  return res.status(201).json({
+    message: "Transaction success created",
+    data: {
+      category: newTransaction.category,
+      amount: newTransaction.amount,
+      comment: newTransaction.comment,
+      income: newTransaction.income,
+    },
+  });
 };
 
 module.exports = addTransactionController;

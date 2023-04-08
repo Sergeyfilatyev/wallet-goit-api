@@ -30,7 +30,20 @@ const updateTransactionController = async (req, res) => {
     user.save();
   }
 
-  return res.status(200).json(updatedTransaction);
+  return res.status(200).json({
+    message: "Success update",
+    data: {
+      _id: updatedTransaction.id,
+      amount: updatedTransaction.amount,
+      income: updatedTransaction.income,
+      category: updatedTransaction.category,
+      comment: updatedTransaction.comment,
+      date: updatedTransaction.date,
+      owner: updatedTransaction.owner,
+      createdAt: updatedTransaction.createdAt,
+      updatedAt: updatedTransaction.updatedAt,
+    },
+  });
 };
 
 module.exports = updateTransactionController;
