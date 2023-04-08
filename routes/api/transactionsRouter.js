@@ -1,5 +1,5 @@
 const express = require("express");
-const controllerWrapper = require("../../helpers/controllerWrapper");
+const { controllerWrapper, validateBody } = require("../../helpers/");
 const {
   getAllTransactionsController,
   addTransactionController,
@@ -7,30 +7,39 @@ const {
   deleteTransactionController,
   getTransactionController,
 } = require("../../controllers");
-const { validateBody } = require("../../helpers");
+
+const { auth } = require("../../middlewares");
 const { addTransaction, editTransaction } = require("../../schemas");
 
 const transactionRouter = express.Router();
 
-transactionRouter.get("/", controllerWrapper(getAllTransactionsController));
+transactionRouter.get(
+  "/",
+  auth,
+  controllerWrapper(getAllTransactionsController)
+);
 
 transactionRouter.post(
   "/",
+  auth,
   validateBody(addTransaction),
   controllerWrapper(addTransactionController)
 );
 
 transactionRouter.patch(
   "/:transactionId",
+  auth,
   validateBody(editTransaction),
   controllerWrapper(updateTransactionController)
 );
 transactionRouter.delete(
   "/:transactionId",
+  auth,
   controllerWrapper(deleteTransactionController)
 );
 transactionRouter.get(
   "/:transactionId",
+  auth,
   controllerWrapper(getTransactionController)
 );
 
