@@ -3,19 +3,18 @@ const Joi = require("joi");
 const addTransaction = Joi.object({
   income: Joi.boolean().required(),
   amount: Joi.number().required(),
-  category: Joi.string()
-    .valid(
-      "main expenses",
-      "products",
-      "car",
-      "self care",
-      "child care",
-      "household products",
-      "education",
-      "leisure",
-      "other expenses"
-    )
-    .required(),
+  category: Joi.string().valid(
+    "main expenses",
+    "products",
+    "car",
+    "self care",
+    "child care",
+    "household products",
+    "education",
+    "leisure",
+    "other expenses"
+  ),
+  date: Joi.object(),
   comment: Joi.string(),
 });
 

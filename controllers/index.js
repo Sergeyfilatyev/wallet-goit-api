@@ -14,6 +14,7 @@ const {
 } = require("./transactions");
 
 const { getCategoriesController } = require("./categories");
+const { getStatisticsController } = require("./statistics");
 
 module.exports = {
   logoutController,
@@ -26,5 +27,5 @@ module.exports = {
   getTransactionController,
   getAllTransactionsController,
   getCategoriesController,
-
+  getStatisticsController,
 };
