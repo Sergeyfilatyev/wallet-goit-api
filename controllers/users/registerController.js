@@ -6,17 +6,22 @@ const registerContoller = async (req, res) => {
   const { name, password, email } = req.body;
   const user = await User.findOne({ email });
   if (user) {
-    throw RequestError(409, "Provided email already exists");
+    throw RequestError(409, "Provided email already in use");
   }
   const hashPassword = await bcrypt.hash(password, 10);
   const newUser = await User.create({ name, password: hashPassword, email });
   if (!newUser) {
     res.status(400);
-    throw new Error("Cannot save user!");
+    throw new Error("Invalid request body");
   }
   res.status(201).json({
-    name: newUser.name,
-    email: newUser.email,
+    status: "success",
+    code: "201",
+    message: "User created",
+    data: {
+      name: newUser.name,
+      email: newUser.email,
+    },
   });
 };
 module.exports = registerContoller;
