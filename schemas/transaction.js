@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const addTransaction = Joi.object({
-  type: Joi.boolean().required(),
+  income: Joi.boolean().required(),
   amount: Joi.number().required(),
   category: Joi.string()
     .valid(
@@ -21,7 +21,7 @@ const addTransaction = Joi.object({
 });
 
 const editTransaction = Joi.object({
-  type: Joi.boolean(),
+  income: Joi.boolean(),
   amount: Joi.number(),
   category: Joi.string().valid(
     "main expenses",
