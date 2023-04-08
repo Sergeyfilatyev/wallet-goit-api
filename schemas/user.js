@@ -16,7 +16,12 @@ const loginUserSchema = Joi.object({
   password: Joi.string().pattern(passRegex).required(),
 });
 
+const resendVerifEmail = Joi.object({
+  email: Joi.string().pattern(emailRegex).required(),
+});
+
 module.exports = {
   registerUserSchema,
   loginUserSchema,
+  resendVerifEmail,
 };
