@@ -12,12 +12,10 @@ const loginController = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  if (!user) {
-    throw RequestError(401, "Email or password is wrong");
-  }
 
   const passwordCompare = await bCrypt.compareSync(password, user.password);
-  if (!passwordCompare) {
+  
+  if (!user || !passwordCompare) {
     throw RequestError(401, "Email or password is wrong");
   }
 
