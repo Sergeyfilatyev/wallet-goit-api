@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "version": "2.0.2",
-    "title": "Swagger Wallet API",
-    "description": "Showing off swagger-ui-express Wallet API",
+    "version": "1.0.0",
+    "title": "Wallet API",
+    "description": "REST API Application",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -12,13 +12,17 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "servers": [
-    { "url": "http://localhost:3030" },
-    { "url": "https://wallet-api-goit.onrender.com" }
+    {
+      "url": "http://localhost:3030"
+    },
+    {
+      "url": "https://wallet-api-goit.onrender.com"
+    }
   ],
   "tags": [
     {
       "name": "Users",
-      "description": "Users endpoints"
+      "description": "Authorization endpoints"
     },
     {
       "name": "Transactions",
@@ -30,19 +34,35 @@
     }
   ],
   "paths": {
-    "/users/register": {
+    "/api/users/register": {
       "post": {
         "tags": ["Users"],
         "summary": "User registration",
         "parameters": [],
-        "security": [],
         "requestBody": {
           "description": "Registration's object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegistrationRequest"
+                "type": "object",
+                "required": ["email", "password", "name"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User email",
+                    "example": "user@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User password",
+                    "example": "123Qwerty"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "User"
+                  }
+                }
               }
             }
           }
@@ -53,35 +73,129 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "description": "responses status",
+                      "example": "success"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "responses code",
+                      "example": "201"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "User created"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "name": "User",
+                        "email": "user@mail.com"
+                      }
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid request body"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
           },
           "409": {
-            "description": "Provided email already exists",
-            "content": {}
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Provided email already in use"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/users/login": {
+    "/api/users/login": {
       "post": {
         "tags": ["Users"],
         "summary": "User login",
         "parameters": [],
-        "security": [],
         "requestBody": {
-          "description": "Login's object",
+          "description": "Login object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User email",
+                    "example": "user@mail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User password",
+                    "example": "123Qwerty"
+                  }
+                }
               }
             }
           }
@@ -92,35 +206,504 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "You have successfully logged in"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "User token",
+                      "example": "token"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "email": "user@mail.com",
+                        "name": "User"
+                      }
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Invalid request body"
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
-            "description": "Email or password is wrong",
-            "content": {}
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email or password is wrong"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/users/logout": {
-      "post": {
+
+    "/api/users/logout": {
+      "get": {
         "tags": ["Users"],
         "summary": "User logout",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [],
-        "security": [],
+        "responses": {
+          "204": {
+            "description": "Successful operation",
+            "content": {}
+          },
+
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/users/current": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Current user",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Successful operation"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "email": "user@mail.com",
+                        "name": "User",
+                        "balance": 100500
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/transactions": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Create a new transaction",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "requestBody": {
-          "description": "Login's object",
+          "description": "Transaction's object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LogoutRequest"
+                "type": "object",
+                "required": ["amount", "type"],
+                "properties": {
+                  "type": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "other expenses"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "example": "Commentary transaction"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "example": "100500"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Transaction created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Transaction successful created"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "category": "other expenses",
+                        "amount": 100500,
+                        "commment": "Commentary transaction",
+                        "type": true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Missing required field"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transactions/": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get all transactions",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "type": "object",
+                "example": {
+                  "balance": 100500,
+                  "transactions": [
+                    {
+                      "_id": "6430ff509a0e4eea095df1e9",
+                      "owner": "UserId",
+                      "date": "4/8/2023, 5:42:44 AM",
+                      "type": true,
+                      "category": "other expenses",
+                      "comment": "Transactions comment",
+                      "amount": 5000
+                    },
+                    {
+                      "_id": "6430ff509a0e4eea095df1e9",
+                      "owner": "UserId",
+                      "date": "4/8/2023, 5:42:44 AM",
+                      "type": false,
+                      "category": "other expenses",
+                      "comment": "Transactions comment",
+                      "amount": 3000
+                    },
+                    {
+                      "_id": "6430ff509a0e4eea095df1e9",
+                      "owner": "UserId",
+                      "date": "4/8/2023, 5:42:44 AM",
+                      "type": false,
+                      "category": "other expenses",
+                      "comment": "Transactions comment",
+                      "amount": 7000
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Fail"
+                    },
+                    "code": {
+                      "type": "number",
+                      "example": "500"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transactions/:id": {
+      "patch": {
+        "tags": ["Transactions"],
+        "summary": "Update transaction",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Transaction's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "car"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "example": "Commentary transaction"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "example": "4500"
+                  }
+                }
               }
             }
           }
@@ -131,18 +714,72 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LogoutResponse"
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Transaction successful update"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "_id": "64311b4d4f493b571dad6681",
+                        "amount": 4500,
+                        "type": false,
+                        "category": "car",
+                        "comment": "Transactions comment",
+                        "date": "08.04.2023, 10:43:02",
+                        "owner": "6430f4be10f5cac93a1400fa",
+                        "createdAt": "2023-04-08T07:44:13.522Z",
+                        "updatedAt": "2023-04-08T08:18:29.120Z"
+                      }
+                    }
+                  }
                 }
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)",
-            "content": {}
-          },
           "401": {
-            "description": "Email or password is wrong",
-            "content": {}
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "Fail"
+                    },
+                    "code": {
+                      "type": "number",
+                      "example": "500"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Internal Server Error"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -150,139 +787,98 @@
   },
   "components": {
     "schemas": {
-      "RegistrationRequest": {
+      "User": {
         "type": "object",
-        "required": ["email", "password", "name"],
         "properties": {
-          "name": {
+          "_id": {
             "type": "string",
-            "description": "User name",
-            "example": "user"
+            "example": "6193b4f36a453535c5b9cfe3"
+          },
+          "token": {
+            "type": "string",
+            "example": "User token"
           },
           "email": {
             "type": "string",
-            "description": "User email",
-            "format": "email"
+            "example": "user@mail.com"
+          },
+          "name": {
+            "type": "string",
+            "example": "User"
+          },
+          "balance": {
+            "type": "Number",
+            "example": 100500
           },
           "password": {
             "type": "string",
-            "description": "User password",
-            "example": "qwerty123"
+            "example": "$2a$10$7/ZJpglAhQnMKAmshacmSe.Gx8pMni4jDIVPykJ9.gGobeZCsYqou"
+          },
+
+          "createdAt": {
+            "type": "string",
+            "example": "2023-04-08T05:45:49.483+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-04-08T05:45:49.483+00:00"
           }
         }
       },
-      "RegistrationResponse": {
+      "Transaction": {
         "type": "object",
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User name",
-            "example": "user"
+          "_id": {
+            "type": "String",
+            "example": "6193b4f36a453535c5b9cfe3"
           },
-          "email": {
+          "owner": {
+            "type": "String",
+            "example": "UserId"
+          },
+          "date": {
+            "type": "String",
+            "example": "1/1/2022, 1:00:00 AM"
+          },
+          "type": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "category": {
             "type": "string",
-            "description": "User email",
-            "format": "email"
+            "example": "other expenses"
+          },
+          "comment": {
+            "type": "String",
+            "example": "User commentary"
+          },
+          "amount": {
+            "type": "number",
+            "example": 100500
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2023-04-08T05:45:49.483+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2023-04-08T05:45:49.483+00:00"
           }
         }
       },
-      "LoginRequest": {
-        "type": "object",
-        "required": ["email", "password"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User email",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "description": "User password",
-            "example": "qwerty123"
-          }
-        }
-      },
-      "LoginResponse": {
+
+      "Category": {
         "type": "object",
         "properties": {
-          "token": {
+          "id": {
             "type": "string",
-            "description": "User token",
-            "example": "bearer token"
+            "example": "1"
           },
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "user"
-              },
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email"
-              }
-            }
+          "category": {
+            "type": "string",
+            "example": "other expenses"
           }
         }
-      },
-      "LogoutRequest": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User token",
-            "example": "bearer token"
-          },
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "user"
-              },
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email"
-              }
-            }
-          }
-        }
-      },
-      "LogoutResponse": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User token",
-            "example": "bearer token"
-          },
-          "user": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "User's name",
-                "example": "user"
-              },
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email"
-              }
-            }
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
       }
     }
   }
