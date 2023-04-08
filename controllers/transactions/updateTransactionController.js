@@ -22,7 +22,7 @@ const updateTransactionController = async (req, res) => {
   if (req.body.amount) {
     const user = await User.findOne(owner);
     const calculatedNumber =
-      transactionToUpdate.type === true
+      transactionToUpdate.income === true
         ? updatedTransaction.amount - transactionToUpdate.amount
         : transactionToUpdate.amount - updatedTransaction.amount;
 

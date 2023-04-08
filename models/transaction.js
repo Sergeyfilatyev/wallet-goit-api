@@ -6,9 +6,9 @@ const transactionSchema = new Schema(
       type: Number,
       required: [true, "Amount is required"],
     },
-    type: {
+    income: {
       type: Boolean,
-      required: [true, "Type is required"],
+      required: [true, "Income is required"],
     },
     category: {
       type: String,
