@@ -22,14 +22,8 @@ router.post(
   controllerWrapper(loginController)
 );
 
-// router.get(
-//   "/current",
-//   // authentificate,
-//   controllerWrapper(getCurrentUserController)
-// );
+router.get("/current", auth, controllerWrapper(getCurrentUserController));
 
 router.get("/logout", auth, controllerWrapper(logoutController));
-
-router.get("/current", auth, controllerWrapper(getCurrentUserController));
 
 module.exports = router;
