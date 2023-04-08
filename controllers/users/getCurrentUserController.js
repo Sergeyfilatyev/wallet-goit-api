@@ -2,9 +2,12 @@ const getCurrentUserController = async (req, res) => {
   const { email, name, balance } = req.user;
 
   res.json({
-    email,
-    name,
-    balance,
+    message: "Successful operation",
+    data: {
+      email,
+      name,
+      balance,
+    },
   });
 };
 

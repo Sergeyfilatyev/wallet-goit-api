@@ -1,15 +1,16 @@
 const express = require("express");
-const cookieparser = require('cookie-parser');
+const cookieparser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const transactionsRouter = require("./routes/api/transactionsRouter");
 const usersRoutes = require("./routes/api/usersRoutes");
-const {auth} = require("./middlewares");
+const { auth } = require("./middlewares");
 const app = express();
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const categoriesRouter = require("./routes/api/categoriesRouter");
+const statisticsRouter = require("./routes/api/statisticsRouter");
 
 app.use(logger(formatsLogger));
 app.use(cors());
@@ -24,6 +25,8 @@ app.use("/api/transactions", auth, transactionsRouter);
 app.use("/api/users", usersRoutes);
 
 app.use("/api/categories", categoriesRouter);
+
+app.use("/api/statistics", statisticsRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not found" });

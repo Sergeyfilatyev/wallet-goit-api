@@ -14,6 +14,7 @@ const addTransaction = Joi.object({
     "leisure",
     "other expenses"
   ),
+
   comment: Joi.string(),
   date: Joi.object({
     time: Joi.number(),

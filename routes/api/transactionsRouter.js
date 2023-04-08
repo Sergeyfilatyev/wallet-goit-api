@@ -6,6 +6,7 @@ const {
   updateTransactionController,
   deleteTransactionController,
   getTransactionController,
+  getStatisticsController,
 } = require("../../controllers");
 
 const { auth } = require("../../middlewares");
