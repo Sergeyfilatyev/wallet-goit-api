@@ -17,7 +17,6 @@ const addTransaction = Joi.object({
     )
     .required(),
   comment: Joi.string(),
-  //date: Joi.date().required(),
 });
 
 const editTransaction = Joi.object({
@@ -35,7 +34,6 @@ const editTransaction = Joi.object({
     "other expenses"
   ),
   comment: Joi.string(),
-  date: Joi.date(),
 }).min(1);
 
 module.exports = {

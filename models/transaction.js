@@ -1,5 +1,7 @@
 const { Schema, model, SchemaTypes } = require("mongoose");
 const { handleError } = require("../helpers");
+const now = new Date();
+
 const transactionSchema = new Schema(
   {
     amount: {
@@ -30,8 +32,13 @@ const transactionSchema = new Schema(
       default: "",
     },
     date: {
-      type: String,
-      default: new Date().toLocaleString(),
+      type: Object,
+      default: {
+        time: now.getTime(),
+        date: now.getDate(),
+        month: now.getMonth(),
+        year: now.getFullYear(),
+      },
     },
     owner: {
       type: SchemaTypes.ObjectId,
