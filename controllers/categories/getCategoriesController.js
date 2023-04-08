@@ -8,7 +8,7 @@ const getCategoriesController = async (req, res) => {
   if (!data) {
     throw RequestError(404, `Categories not found`);
   }
-  res.status(200).json(JSON.parse(data));
+  res.status(200).json({ message: "Success", data: JSON.parse(data) });
 };
 
 module.exports = getCategoriesController;

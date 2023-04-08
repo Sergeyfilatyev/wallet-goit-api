@@ -473,10 +473,10 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["amount", "type"],
+                "required": ["amount", "income"],
                 "properties": {
                   "type": {
-                    "type": "boolean",
+                    "income": "boolean",
                     "example": true
                   },
                   "category": {
@@ -507,7 +507,7 @@
                     "message": {
                       "type": "string",
                       "description": "responses message",
-                      "example": "Transaction successful created"
+                      "example": "Transaction success created"
                     },
                     "data": {
                       "type": "object",
@@ -516,7 +516,7 @@
                         "category": "other expenses",
                         "amount": 100500,
                         "commment": "Commentary transaction",
-                        "type": true
+                        "income": true
                       }
                     }
                   }
@@ -550,6 +550,22 @@
                     "message": {
                       "type": "string",
                       "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
                     }
                   }
                 }
@@ -592,13 +608,12 @@
               "application/json": {
                 "type": "object",
                 "example": {
-                  "balance": 100500,
                   "transactions": [
                     {
                       "_id": "6430ff509a0e4eea095df1e9",
                       "owner": "UserId",
                       "date": "4/8/2023, 5:42:44 AM",
-                      "type": true,
+                      "income": true,
                       "category": "other expenses",
                       "comment": "Transactions comment",
                       "amount": 5000
@@ -607,7 +622,7 @@
                       "_id": "6430ff509a0e4eea095df1e9",
                       "owner": "UserId",
                       "date": "4/8/2023, 5:42:44 AM",
-                      "type": false,
+                      "income": false,
                       "category": "other expenses",
                       "comment": "Transactions comment",
                       "amount": 3000
@@ -616,7 +631,7 @@
                       "_id": "6430ff509a0e4eea095df1e9",
                       "owner": "UserId",
                       "date": "4/8/2023, 5:42:44 AM",
-                      "type": false,
+                      "income": false,
                       "category": "other expenses",
                       "comment": "Transactions comment",
                       "amount": 7000
@@ -642,24 +657,32 @@
               }
             }
           },
-          "500": {
-            "description": "Internal Server Error",
+          "404": {
+            "description": "Not found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "Fail"
-                    },
-                    "code": {
-                      "type": "number",
-                      "example": "500"
-                    },
                     "message": {
                       "type": "string",
-                      "example": "Internal Server Error"
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
                     }
                   }
                 }
@@ -673,7 +696,14 @@
       "patch": {
         "tags": ["Transactions"],
         "summary": "Update transaction",
-        "parameters": [],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "description": "User ID",
+            "name": "id"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -688,7 +718,7 @@
                 "type": "object",
                 "properties": {
                   "type": {
-                    "type": "boolean",
+                    "income": "boolean",
                     "example": false
                   },
                   "category": {
@@ -719,7 +749,7 @@
                     "message": {
                       "type": "string",
                       "description": "responses message",
-                      "example": "Transaction successful update"
+                      "example": "Success update"
                     },
                     "data": {
                       "type": "object",
@@ -727,7 +757,7 @@
                       "example": {
                         "_id": "64311b4d4f493b571dad6681",
                         "amount": 4500,
-                        "type": false,
+                        "income": false,
                         "category": "car",
                         "comment": "Transactions comment",
                         "date": "08.04.2023, 10:43:02",
@@ -757,24 +787,306 @@
               }
             }
           },
-          "500": {
-            "description": "Internal Server Error",
+          "404": {
+            "description": "Not found",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "Fail"
-                    },
-                    "code": {
-                      "type": "number",
-                      "example": "500"
-                    },
                     "message": {
                       "type": "string",
-                      "example": "Internal Server Error"
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transactions/:id/": {
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Delete transaction",
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "description": "User ID",
+            "name": "id"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Transaction removed"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/transactions/:userId": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get transaction by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "description": "User ID",
+            "name": "id"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "_id": "64311b4d4f493b571dad6681",
+                        "amount": 4500,
+                        "income": false,
+                        "category": "car",
+                        "comment": "Transactions comment",
+                        "date": "08.04.2023, 10:43:02",
+                        "owner": "6430f4be10f5cac93a1400fa",
+                        "createdAt": "2023-04-08T07:44:13.522Z",
+                        "updatedAt": "2023-04-08T08:18:29.120Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": [
+                        { "id": "1", "category": "other expenses" },
+                        { "id": "2", "category": "other expenses" },
+                        { "id": "3", "category": "other expenses" }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
                     }
                   }
                 }
@@ -879,6 +1191,13 @@
             "example": "other expenses"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
