@@ -7,10 +7,20 @@ const {
   getCurrentUserController,
 } = require("../../controllers/");
 const controllerWrapper = require("../../helpers/controllerWrapper");
+const { validateBody } = require("../../helpers");
+const { registerUserSchema, loginUserSchema } = require("../../schemas");
 const { auth } = require("../../middlewares");
 
-router.post("/register", controllerWrapper(registerController));
-router.post("/login", controllerWrapper(loginController));
+router.post(
+  "/register",
+  validateBody(registerUserSchema),
+  controllerWrapper(registerController)
+);
+router.post(
+  "/login",
+  validateBody(loginUserSchema),
+  controllerWrapper(loginController)
+);
 
 router.get("/current", auth, controllerWrapper(getCurrentUserController));
 

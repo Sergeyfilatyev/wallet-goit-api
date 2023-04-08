@@ -1,38 +1,44 @@
 const Joi = require("joi");
 
-const addIncomeTransaction = Joi.object({
+const addTransaction = Joi.object({
   type: Joi.boolean().required(),
   amount: Joi.number().required(),
-  category: Joi.string(),
+  category: Joi.string()
+    .valid(
+      "main expenses",
+      "products",
+      "car",
+      "self care",
+      "child care",
+      "household products",
+      "education",
+      "leisure",
+      "other expenses"
+    )
+    .required(),
   comment: Joi.string(),
-  date: Joi.date().required(),
-});
-
-const addExpenceTransaction = Joi.object({
-  type: Joi.boolean().required(),
-  amount: Joi.number().required(),
-  category: Joi.string().required(), //add existing categories
-  comment: Joi.string(),
-  date: Joi.date().required(),
+  //date: Joi.date().required(),
 });
 
 const editTransaction = Joi.object({
-  id: Joi.string.required(),
   type: Joi.boolean(),
   amount: Joi.number(),
-  category: Joi.string(), //add existing categories
+  category: Joi.string().valid(
+    "main expenses",
+    "products",
+    "car",
+    "self care",
+    "child care",
+    "household products",
+    "education",
+    "leisure",
+    "other expenses"
+  ),
   comment: Joi.string(),
   date: Joi.date(),
-});
-//at least one of the fields should be edited
-
-const deleteTransaction = Joi.object({
-  id: Joi.string.required(),
-});
+}).min(1);
 
 module.exports = {
-  addIncomeTransaction,
-  addExpenceTransaction,
+  addTransaction,
   editTransaction,
-  deleteTransaction,
 };
