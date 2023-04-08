@@ -8,7 +8,11 @@ const {
 } = require("../../controllers/");
 const controllerWrapper = require("../../helpers/controllerWrapper");
 const { validateBody } = require("../../helpers");
-const { registerUserSchema, loginUserSchema } = require("../../schemas");
+const {
+  registerUserSchema,
+  loginUserSchema,
+  resendVerifEmail,
+} = require("../../schemas");
 const { auth } = require("../../middlewares");
 
 router.post(
