@@ -66,6 +66,6 @@ const getStatisticsController = async (req, res) => {
     incomeByCategory: incomeCategoryTotals,
   };
 
-  res.json({ message: "success", statistics });
+  res.json({ message: "Successful operation", data: statistics });
 };
 module.exports = getStatisticsController;

@@ -31,6 +31,10 @@
     {
       "name": "Categories",
       "description": "Categories endpoints"
+    },
+    {
+      "name": "Statistics",
+      "description": "Statistics endpoints"
     }
   ],
   "paths": {
@@ -75,16 +79,6 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "description": "responses status",
-                      "example": "success"
-                    },
-                    "code": {
-                      "type": "string",
-                      "description": "responses code",
-                      "example": "201"
-                    },
                     "message": {
                       "type": "string",
                       "description": "responses message",
@@ -223,7 +217,8 @@
                       "description": "responses data",
                       "example": {
                         "email": "user@mail.com",
-                        "name": "User"
+                        "name": "User",
+                        "id": "User ID"
                       }
                     }
                   }
@@ -475,7 +470,7 @@
                 "type": "object",
                 "required": ["amount", "income"],
                 "properties": {
-                  "type": {
+                  "income": {
                     "income": "boolean",
                     "example": true
                   },
@@ -589,9 +584,7 @@
             }
           }
         }
-      }
-    },
-    "/api/transactions/": {
+      },
       "get": {
         "tags": ["Transactions"],
         "summary": "Get all transactions",
@@ -608,11 +601,16 @@
               "application/json": {
                 "type": "object",
                 "example": {
-                  "transactions": [
+                  "data": [
                     {
                       "_id": "6430ff509a0e4eea095df1e9",
                       "owner": "UserId",
-                      "date": "4/8/2023, 5:42:44 AM",
+                      "date": {
+                        "time": 1680966033359,
+                        "day": 8,
+                        "month": 3,
+                        "year": 2022
+                      },
                       "income": true,
                       "category": "other expenses",
                       "comment": "Transactions comment",
@@ -621,7 +619,12 @@
                     {
                       "_id": "6430ff509a0e4eea095df1e9",
                       "owner": "UserId",
-                      "date": "4/8/2023, 5:42:44 AM",
+                      "date": {
+                        "time": 1680966033359,
+                        "day": 8,
+                        "month": 3,
+                        "year": 2022
+                      },
                       "income": false,
                       "category": "other expenses",
                       "comment": "Transactions comment",
@@ -630,7 +633,12 @@
                     {
                       "_id": "6430ff509a0e4eea095df1e9",
                       "owner": "UserId",
-                      "date": "4/8/2023, 5:42:44 AM",
+                      "date": {
+                        "time": 1680966033359,
+                        "day": 8,
+                        "month": 3,
+                        "year": 2022
+                      },
                       "income": false,
                       "category": "other expenses",
                       "comment": "Transactions comment",
@@ -692,15 +700,16 @@
         }
       }
     },
-    "/api/transactions/:id": {
-      "patch": {
+
+    "/api/transactions/{id}": {
+      "get": {
         "tags": ["Transactions"],
-        "summary": "Update transaction",
+        "summary": "Get transaction by ID",
         "parameters": [
           {
             "in": "path",
             "required": true,
-            "description": "User ID",
+            "description": "Transaction ID",
             "name": "id"
           }
         ],
@@ -709,35 +718,6 @@
             "Bearer": []
           }
         ],
-        "requestBody": {
-          "description": "Transaction's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "income": "boolean",
-                    "example": false
-                  },
-                  "category": {
-                    "type": "string",
-                    "example": "car"
-                  },
-                  "comment": {
-                    "type": "string",
-                    "example": "Commentary transaction"
-                  },
-                  "amount": {
-                    "type": "number",
-                    "example": "4500"
-                  }
-                }
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -749,7 +729,7 @@
                     "message": {
                       "type": "string",
                       "description": "responses message",
-                      "example": "Success update"
+                      "example": "Successful operation"
                     },
                     "data": {
                       "type": "object",
@@ -760,7 +740,12 @@
                         "income": false,
                         "category": "car",
                         "comment": "Transactions comment",
-                        "date": "08.04.2023, 10:43:02",
+                        "date": {
+                          "time": 1680966033359,
+                          "day": 8,
+                          "month": 3,
+                          "year": 2022
+                        },
                         "owner": "6430f4be10f5cac93a1400fa",
                         "createdAt": "2023-04-08T07:44:13.522Z",
                         "updatedAt": "2023-04-08T08:18:29.120Z"
@@ -820,9 +805,140 @@
             }
           }
         }
-      }
-    },
-    "/api/transactions/:id/": {
+      },
+      "patch": {
+        "tags": ["Transactions"],
+        "summary": "Update transaction",
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "description": "Transaction ID",
+            "name": "id"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Transaction's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "income": "boolean",
+                    "example": false
+                  },
+                  "category": {
+                    "type": "string",
+                    "example": "car"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "example": "Commentary transaction"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "example": "4500"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Success update"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "_id": "64311b4d4f493b571dad6681",
+                        "amount": 4500,
+                        "income": false,
+                        "category": "car",
+                        "comment": "Transactions comment",
+                        "date": {
+                          "time": 1680966033359,
+                          "day": 8,
+                          "month": 3,
+                          "year": 2022
+                        },
+                        "owner": "6430f4be10f5cac93a1400fa",
+                        "createdAt": "2023-04-08T07:44:13.522Z",
+                        "updatedAt": "2023-04-08T08:18:29.120Z"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": ["Transactions"],
         "summary": "Delete transaction",
@@ -830,7 +946,7 @@
           {
             "in": "path",
             "required": true,
-            "description": "User ID",
+            "description": "Transaction ID",
             "name": "id"
           }
         ],
@@ -908,18 +1024,10 @@
         }
       }
     },
-    "/api/transactions/:userId": {
+    "/api/categories": {
       "get": {
-        "tags": ["Transactions"],
-        "summary": "Get transaction by ID",
-        "parameters": [
-          {
-            "in": "path",
-            "required": true,
-            "description": "User ID",
-            "name": "id"
-          }
-        ],
+        "tags": ["Categories"],
+        "summary": "Get all categories",
         "security": [
           {
             "Bearer": []
@@ -936,22 +1044,16 @@
                     "message": {
                       "type": "string",
                       "description": "responses message",
-                      "example": "Success"
+                      "example": "Successful operation"
                     },
                     "data": {
                       "type": "object",
                       "description": "responses data",
-                      "example": {
-                        "_id": "64311b4d4f493b571dad6681",
-                        "amount": 4500,
-                        "income": false,
-                        "category": "car",
-                        "comment": "Transactions comment",
-                        "date": "08.04.2023, 10:43:02",
-                        "owner": "6430f4be10f5cac93a1400fa",
-                        "createdAt": "2023-04-08T07:44:13.522Z",
-                        "updatedAt": "2023-04-08T08:18:29.120Z"
-                      }
+                      "example": [
+                        { "id": "1", "category": "other expenses" },
+                        { "id": "2", "category": "other expenses" },
+                        { "id": "3", "category": "other expenses" }
+                      ]
                     }
                   }
                 }
@@ -1009,10 +1111,22 @@
         }
       }
     },
-    "/api/categories": {
+    "/api/statistics": {
       "get": {
-        "tags": ["Categories"],
-        "summary": "Get all categories",
+        "tags": ["Statistics"],
+        "summary": "Get all statistics",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Year",
+            "name": "year"
+          },
+          {
+            "in": "query",
+            "description": "Month",
+            "name": "month"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -1029,16 +1143,37 @@
                     "message": {
                       "type": "string",
                       "description": "responses message",
-                      "example": "Success"
+                      "example": "Successful operation"
                     },
                     "data": {
                       "type": "object",
                       "description": "responses data",
-                      "example": [
-                        { "id": "1", "category": "other expenses" },
-                        { "id": "2", "category": "other expenses" },
-                        { "id": "3", "category": "other expenses" }
-                      ]
+                      "example": {
+                        "totalIncome": 1000,
+                        "totalExpense": 5000,
+                        "expenseByCategory": {
+                          "main expenses": 0,
+                          "products": 1000,
+                          "car": 0,
+                          "self care": 1000,
+                          "child care": 0,
+                          "household products": 1000,
+                          "education": 1000,
+                          "leisure": 1000,
+                          "other expenses": 0
+                        },
+                        "incomeByCategory": {
+                          "main expenses": 0,
+                          "products": 0,
+                          "car": 500,
+                          "self care": 0,
+                          "child care": 0,
+                          "household products": 0,
+                          "education": 0,
+                          "leisure": 0,
+                          "other expenses": 500
+                        }
+                      }
                     }
                   }
                 }
@@ -1149,8 +1284,13 @@
             "example": "UserId"
           },
           "date": {
-            "type": "String",
-            "example": "1/1/2022, 1:00:00 AM"
+            "type": "Object",
+            "example": {
+              "time": 1680966033359,
+              "day": 8,
+              "month": 3,
+              "year": 2022
+            }
           },
           "type": {
             "type": "boolean",
@@ -1189,6 +1329,47 @@
           "category": {
             "type": "string",
             "example": "other expenses"
+          }
+        }
+      },
+      "Statistics": {
+        "type": "object",
+        "properties": {
+          "totalIncome": {
+            "type": "Number",
+            "example": 1000
+          },
+          "totalExpense": {
+            "type": "Number",
+            "example": 500
+          },
+          "expenseByCategory": {
+            "type": "Object",
+            "example": {
+              "main expenses": 0,
+              "products": 0,
+              "car": 0,
+              "self care": 0,
+              "child care": 0,
+              "household products": 0,
+              "education": 0,
+              "leisure": 0,
+              "other expenses": 0
+            }
+          },
+          "incomeByCategory": {
+            "type": "Object",
+            "example": {
+              "main expenses": 0,
+              "products": 0,
+              "car": 0,
+              "self care": 0,
+              "child care": 0,
+              "household products": 0,
+              "education": 0,
+              "leisure": 0,
+              "other expenses": 0
+            }
           }
         }
       }

@@ -15,8 +15,8 @@ const registerContoller = async (req, res) => {
     throw new Error("Cannot save user!");
   }
   res.status(201).json({
-    name: newUser.name,
-    email: newUser.email,
+    message: "User created",
+    data: { name: newUser.name, email: newUser.email },
   });
 };
 module.exports = registerContoller;

@@ -14,7 +14,7 @@ const loginController = async (req, res) => {
   const user = await User.findOne({ email });
 
   const passwordCompare = await bCrypt.compareSync(password, user.password);
-  
+
   if (!user || !passwordCompare) {
     throw RequestError(401, "Email or password is wrong");
   }
@@ -27,6 +27,7 @@ const loginController = async (req, res) => {
   await User.findByIdAndUpdate(user._id, { token });
 
   return res.status(200).json({
+    message: "You have successfully logged in",
     token,
     user: {
       name: user.name,
