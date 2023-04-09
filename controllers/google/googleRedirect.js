@@ -27,7 +27,11 @@ const googleRedirect = async (req, res) => {
     },
   });
   const user = await User.findOne({ email: userData.data.email });
-  if (user) {
+
+  if (user && user.type === "password auth") {
+    return res.redirect(`${process.env.FRONTEND_URL}`);
+  }
+  if (user && user.type === "google auth") {
     await User.updateOne({
       token: tokenData.data.access_token,
       password: tokenData.data.access_token,
@@ -37,12 +41,11 @@ const googleRedirect = async (req, res) => {
       name: userData.data.name,
       email: userData.data.email,
       token: tokenData.data.access_token,
-      password: "iii",
+      type: "google auth",
     });
   }
-
   return res.redirect(
-    `${process.env.FRONTEND_URL}?token=${tokenData.data.access_token}&name=${userData.data.name}`
+    `${process.env.FRONTEND_URL}/dashboard?token=${tokenData.data.access_token}&name=${userData.data.name}`
   );
 };
 module.exports = googleRedirect;

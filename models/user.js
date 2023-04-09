@@ -8,7 +8,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, "Password is required"],
+      default: "",
     },
     email: {
       type: String,
@@ -17,6 +17,11 @@ const userSchema = new Schema(
     token: {
       type: String,
       default: "",
+    },
+    type: {
+      type: String,
+      enum: ["password auth", "google auth"],
+      default: "password auth",
     },
     balance: {
       type: Number,
