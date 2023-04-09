@@ -28,16 +28,21 @@ const googleRedirect = async (req, res) => {
   });
   const user = await User.findOne({ email: userData.data.email });
   if (user) {
-    throw RequestError(409, "Provided email already in use");
+    await User.updateOne({
+      token: tokenData.data.access_token,
+      password: tokenData.data.access_token,
+    });
+  } else {
+    await User.create({
+      name: userData.data.name,
+      email: userData.data.email,
+      token: tokenData.data.access_token,
+      password: "iii",
+    });
   }
-  await User.create({
-    name: userData.data.name,
-    email: userData.data.email,
-    token: tokenData.data.access_token,
-    password: "iii",
-  });
+
   return res.redirect(
-    `${process.env.FRONTEND_URL}?email=${userData.data.email}&name=${userData.data.name}`
+    `${process.env.FRONTEND_URL}?token=${tokenData.data.access_token}&name=${userData.data.name}`
   );
 };
 module.exports = googleRedirect;
