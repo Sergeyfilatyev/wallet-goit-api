@@ -11,6 +11,7 @@ const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const categoriesRouter = require("./routes/api/categoriesRouter");
 const statisticsRouter = require("./routes/api/statisticsRouter");
+const googleAuthRouter = require("./routes/api/googleAuthRouter");
 
 app.use(logger(formatsLogger));
 app.use(cors());
@@ -27,6 +28,8 @@ app.use("/api/users", usersRoutes);
 app.use("/api/categories", categoriesRouter);
 
 app.use("/api/statistics", statisticsRouter);
+
+app.use("/api/auth", googleAuthRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Not found" });

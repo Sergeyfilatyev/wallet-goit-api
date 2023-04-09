@@ -15,6 +15,7 @@ const {
 
 const { getCategoriesController } = require("./categories");
 const { getStatisticsController } = require("./statistics");
+const { googleAuth, googleRedirect } = require("./google");
 
 module.exports = {
   logoutController,
@@ -28,4 +29,6 @@ module.exports = {
   getAllTransactionsController,
   getCategoriesController,
   getStatisticsController,
+  googleAuth,
+  googleRedirect,
 };
