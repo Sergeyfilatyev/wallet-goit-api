@@ -8,7 +8,6 @@ const getAllTransactionsController = async (req, res) => {
   if (!allTransactions) {
     throw RequestError(404, "Not found");
   }
-
   return res.status(200).json({ data: allTransactions });
 };
 

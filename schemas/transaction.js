@@ -14,8 +14,14 @@ const addTransaction = Joi.object({
     "leisure",
     "other expenses"
   ),
-  date: Joi.object(),
+
   comment: Joi.string(),
+  date: Joi.object({
+    time: Joi.number(),
+    day: Joi.number(),
+    month: Joi.number(),
+    year: Joi.number(),
+  }),
 });
 
 const editTransaction = Joi.object({
@@ -33,6 +39,12 @@ const editTransaction = Joi.object({
     "other expenses"
   ),
   comment: Joi.string(),
+  date: Joi.object({
+    time: Joi.number(),
+    day: Joi.number(),
+    month: Joi.number(),
+    year: Joi.number(),
+  }),
 }).min(1);
 
 module.exports = {
