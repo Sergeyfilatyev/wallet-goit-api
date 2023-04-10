@@ -27,7 +27,7 @@ const loginController = async (req, res) => {
 
   const tokens = generateTokens(payload);
 
-  await User.findByIdAndUpdate(user._id, { token: tokens.accessToken });
+  await User.findByIdAndUpdate(user._id, { token: tokens.refreshToken });
 
   res.cookie("refreshToken", tokens.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
