@@ -1,9 +1,6 @@
-require("dotenv").config();
-
 const bCrypt = require("bcryptjs");
 
-const jwt = require("jsonwebtoken");
-const { SECRET_KEY } = process.env;
+const { generateTokens } = require("../../services");
 
 const { RequestError } = require("../../helpers");
 const { User } = require("../../models");
@@ -13,6 +10,10 @@ const loginController = async (req, res) => {
 
   const user = await User.findOne({ email });
 
+  if (!user) {
+    throw RequestError(401, "Email or password is wrong");
+  }
+
   const passwordCompare = await bCrypt.compareSync(password, user.password);
 
   if (!user || !passwordCompare) {
@@ -21,15 +22,23 @@ const loginController = async (req, res) => {
 
   const payload = {
     id: user._id,
+    name: user.name,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "24h" });
-  await User.findByIdAndUpdate(user._id, { token });
+  const tokens = generateTokens(payload);
+
+  await User.findByIdAndUpdate(user._id, { token: tokens.accessToken });
+
+  res.cookie("refreshToken", tokens.refreshToken, {
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  });
 
   return res.status(200).json({
     message: "You have successfully logged in",
-    token,
-    user: {
+    token: tokens.accessToken,
+    data: {
+      id: user._id,
       name: user.name,
       email: user.email,
     },
