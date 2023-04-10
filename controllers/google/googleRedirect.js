@@ -44,13 +44,13 @@ const googleRedirect = async (req, res) => {
   const tokens = generateTokens(payload);
 
   if (user && user.type === "password auth") {
-    return res.redirect(`${process.env.FRONTEND_URL}`);
+    return res.redirect(`${process.env.FRONTEND_URL}/google-auth`);
   }
   if (user && user.type === "google auth") {
     await User.findByIdAndUpdate(user._id, { token: tokens.accessToken });
   }
   return res.redirect(
-    `${process.env.FRONTEND_URL}/dashboard?token=${tokens.accessToken}&name=${userData.data.name}`
+    `${process.env.FRONTEND_URL}/google-auth?token=${tokens.accessToken}&name=${userData.data.name}`
   );
 };
 module.exports = googleRedirect;
