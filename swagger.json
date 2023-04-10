@@ -333,12 +333,21 @@
       "get": {
         "tags": ["Users"],
         "summary": "User logout",
+
         "security": [
           {
             "Bearer": []
           }
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "204": {
             "description": "Successful operation",
@@ -401,7 +410,15 @@
       "get": {
         "tags": ["Users"],
         "summary": "Current user",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -490,7 +507,15 @@
       "post": {
         "tags": ["Transactions"],
         "summary": "Create a new transaction",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -623,7 +648,15 @@
       "get": {
         "tags": ["Transactions"],
         "summary": "Get all transactions",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -746,6 +779,13 @@
             "required": true,
             "description": "Transaction ID",
             "name": "id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [
@@ -850,6 +890,13 @@
             "required": true,
             "description": "Transaction ID",
             "name": "id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [
@@ -983,6 +1030,13 @@
             "required": true,
             "description": "Transaction ID",
             "name": "id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [
@@ -1063,6 +1117,15 @@
       "get": {
         "tags": ["Categories"],
         "summary": "Get all categories",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -1160,6 +1223,13 @@
             "in": "query",
             "description": "Month",
             "name": "month"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [
