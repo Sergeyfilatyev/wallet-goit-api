@@ -1,7 +1,6 @@
 const queryString = require("query-string");
 const axios = require("axios");
 const { User } = require("../../models");
-const { RequestError } = require("../../helpers");
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;

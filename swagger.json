@@ -21,6 +21,10 @@
   ],
   "tags": [
     {
+      "name": "Google Auth",
+      "description": "Authorization endpoints"
+    },
+    {
       "name": "Users",
       "description": "Authorization endpoints"
     },
@@ -38,6 +42,53 @@
     }
   ],
   "paths": {
+    "/api/auth/google": {
+      "post": {
+        "tags": ["Google Auth"],
+        "summary": "Google Auth",
+        "parameters": [],
+        "requestBody": {},
+        "responses": {
+          "302": {
+            "description": "Redirection to Google sign-in page",
+            "content": {}
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
     "/api/users/register": {
       "post": {
         "tags": ["Users"],
