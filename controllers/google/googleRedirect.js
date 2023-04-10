@@ -1,6 +1,7 @@
 const queryString = require("query-string");
 const axios = require("axios");
 const { User } = require("../../models");
+const { generateTokens } = require("../../services");
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
@@ -25,26 +26,31 @@ const googleRedirect = async (req, res) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   });
-  const user = await User.findOne({ email: userData.data.email });
+
+  let user = await User.findOne({ email: userData.data.email });
+
+  if (!user) {
+    user = await User.create({
+      name: userData.data.name,
+      email: userData.data.email,
+      type: "google auth",
+    });
+  }
+  const payload = {
+    id: user._id,
+    name: userData.data.name,
+  };
+
+  const tokens = generateTokens(payload);
 
   if (user && user.type === "password auth") {
     return res.redirect(`${process.env.FRONTEND_URL}`);
   }
   if (user && user.type === "google auth") {
-    await User.updateOne({
-      token: tokenData.data.access_token,
-      password: tokenData.data.access_token,
-    });
-  } else {
-    await User.create({
-      name: userData.data.name,
-      email: userData.data.email,
-      token: tokenData.data.access_token,
-      type: "google auth",
-    });
+    await User.findByIdAndUpdate(user._id, { token: tokens.accessToken });
   }
   return res.redirect(
-    `${process.env.FRONTEND_URL}/dashboard?token=${tokenData.data.access_token}&name=${userData.data.name}`
+    `${process.env.FRONTEND_URL}/dashboard?token=${tokens.accessToken}&name=${userData.data.name}`
   );
 };
 module.exports = googleRedirect;
