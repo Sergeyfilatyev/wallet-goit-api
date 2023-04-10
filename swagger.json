@@ -330,7 +330,7 @@
     },
 
     "/api/users/logout": {
-      "get": {
+      "post": {
         "tags": ["Users"],
         "summary": "User logout",
 
