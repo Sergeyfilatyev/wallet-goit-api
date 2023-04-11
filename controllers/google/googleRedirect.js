@@ -47,8 +47,12 @@ const googleRedirect = async (req, res) => {
     return res.redirect(`${process.env.FRONTEND_URL}/google-auth`);
   }
   if (user && user.type === "google auth") {
-    await User.findByIdAndUpdate(user._id, { token: tokens.accessToken });
+    await User.findByIdAndUpdate(user._id, { token: tokens.refreshToken });
   }
+  res.cookie("refreshToken", tokens.refreshToken, {
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  });
   return res.redirect(
     `${process.env.FRONTEND_URL}/google-auth?token=${tokens.accessToken}&name=${userData.data.name}`
   );
