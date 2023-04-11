@@ -1,6 +1,6 @@
 const bCrypt = require("bcryptjs");
 
-const { generateTokens } = require("../../services");
+const { generateTokens } = require("../../services/tokenService");
 
 const { RequestError } = require("../../helpers");
 const { User } = require("../../models");

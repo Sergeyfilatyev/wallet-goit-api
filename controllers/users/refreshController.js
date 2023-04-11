@@ -1,5 +1,8 @@
 const { RequestError } = require("../../helpers");
-const { validateRefreshToken, generateTokens } = require("../../services");
+const {
+  validateRefreshToken,
+  generateTokens,
+} = require("../../services/tokenService");
 const { User } = require("../../models");
 
 const refreshController = async (req, res) => {
