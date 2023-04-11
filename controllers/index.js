@@ -3,6 +3,8 @@ const {
   registerController,
   loginController,
   getCurrentUserController,
+  verifyController,
+  resendEmailController,
   refreshController,
 } = require("./users");
 
@@ -32,5 +34,8 @@ module.exports = {
   getStatisticsController,
   googleAuth,
   googleRedirect,
+  verifyController,
+  resendEmailController,
   refreshController,
+
 };

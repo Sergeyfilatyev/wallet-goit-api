@@ -5,6 +5,8 @@ const {
   registerController,
   loginController,
   getCurrentUserController,
+  verifyController,
+  resendEmailController,
   refreshController,
 } = require("../../controllers/");
 const controllerWrapper = require("../../helpers/controllerWrapper");
@@ -21,6 +23,15 @@ router.post(
   validateBody(registerUserSchema),
   controllerWrapper(registerController)
 );
+
+router.get("/verify/:verificationToken", controllerWrapper(verifyController));
+
+router.post(
+  "/verify",
+  validateBody(resendVerifEmail),
+  controllerWrapper(resendEmailController)
+);
+
 router.post(
   "/login",
   validateBody(loginUserSchema),
