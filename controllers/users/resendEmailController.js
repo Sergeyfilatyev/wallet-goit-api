@@ -1,7 +1,7 @@
 const { User } = require("../../models");
 const { RequestError, sendEmail } = require("../../helpers");
 
-const { BASE_URL } = process.env;
+const { BASE_URL, USER_MAIL } = process.env;
 
 const resendEmailController = async (req, res) => {
   const { email } = req.body;

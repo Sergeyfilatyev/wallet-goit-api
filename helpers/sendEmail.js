@@ -1,26 +1,19 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-const { META_PASSWORD, BASE_URL } = process.env;
+const { USER_MAIL, HOST_MAIL, PORT_MAIL, PASS_MAIL } = process.env;
 
-const sendEmail = async (email, verificationToken) => {
+const sendEmail = async (email) => {
   const transport = nodemailer.createTransport({
-    host: "smtp.meta.ua",
-    port: 465,
-    secure: true,
+    host: HOST_MAIL,
+    port: PORT_MAIL,
+    secure: false,
     auth: {
-      user: "walletua@meta.ua",
-      pass: META_PASSWORD,
+      user: USER_MAIL,
+      pass: PASS_MAIL,
     },
   });
-  const verificationEmail = {
-    from: "walletua@meta.ua",
-    to: email,
-    subject: "Verify registration",
-    text: "Click to confirm registration",
-    html: `<a href="${BASE_URL}/api/users/verify/${verificationToken}">Confirm Registration</a>`,
-  };
-  await transport.sendMail(verificationEmail);
+  await transport.sendMail(email);
 };
 
 module.exports = sendEmail;
