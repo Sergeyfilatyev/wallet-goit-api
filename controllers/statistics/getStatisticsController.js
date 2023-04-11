@@ -58,7 +58,7 @@ const getStatisticsController = async (req, res) => {
 
   const statistics = {
     totalIncome: income,
-    totalExpense: Math.abs(expense),
+    totalExpense: expense,
     expenseByCategory: expenseCategoryTotals,
   };
 
