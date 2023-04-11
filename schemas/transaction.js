@@ -3,17 +3,21 @@ const Joi = require("joi");
 const addTransaction = Joi.object({
   income: Joi.boolean().required(),
   amount: Joi.number().required(),
-  category: Joi.string().valid(
-    "main expenses",
-    "products",
-    "car",
-    "self care",
-    "child care",
-    "household products",
-    "education",
-    "leisure",
-    "other expenses"
-  ),
+  category: Joi.when("income", {
+    is: true,
+    then: Joi.string().valid("income").required(),
+    otherwise: Joi.string().valid(
+      "main expenses",
+      "products",
+      "car",
+      "self care",
+      "child care",
+      "household products",
+      "education",
+      "leisure",
+      "other expenses"
+    ),
+  }),
 
   comment: Joi.string(),
   date: Joi.object({
@@ -27,17 +31,21 @@ const addTransaction = Joi.object({
 const editTransaction = Joi.object({
   income: Joi.boolean(),
   amount: Joi.number(),
-  category: Joi.string().valid(
-    "main expenses",
-    "products",
-    "car",
-    "self care",
-    "child care",
-    "household products",
-    "education",
-    "leisure",
-    "other expenses"
-  ),
+  category: Joi.when("income", {
+    is: true,
+    then: Joi.string().valid("income").required(),
+    otherwise: Joi.string().valid(
+      "main expenses",
+      "products",
+      "car",
+      "self care",
+      "child care",
+      "household products",
+      "education",
+      "leisure",
+      "other expenses"
+    ),
+  }),
   comment: Joi.string(),
   date: Joi.object({
     time: Joi.number(),

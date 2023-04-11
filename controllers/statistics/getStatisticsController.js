@@ -39,31 +39,27 @@ const getStatisticsController = async (req, res) => {
     initialCategoryTotals[category] = 0;
   });
 
-  const { income, expense, incomeCategoryTotals, expenseCategoryTotals } =
-    filterData.reduce(
-      (acc, { amount, income, category }) => {
-        if (income) {
-          acc.income += amount;
-          acc.incomeCategoryTotals[category] += amount;
-        } else {
-          acc.expense += amount;
-          acc.expenseCategoryTotals[category] += amount;
-        }
-        return acc;
-      },
-      {
-        income: 0,
-        expense: 0,
-        incomeCategoryTotals: { ...initialCategoryTotals },
-        expenseCategoryTotals: { ...initialCategoryTotals },
+  const { income, expense, expenseCategoryTotals } = filterData.reduce(
+    (acc, { amount, income, category }) => {
+      if (income) {
+        acc.income += amount;
+      } else {
+        acc.expense += amount;
+        acc.expenseCategoryTotals[category] += amount;
       }
-    );
+      return acc;
+    },
+    {
+      income: 0,
+      expense: 0,
+      expenseCategoryTotals: { ...initialCategoryTotals },
+    }
+  );
 
   const statistics = {
     totalIncome: income,
     totalExpense: Math.abs(expense),
     expenseByCategory: expenseCategoryTotals,
-    incomeByCategory: incomeCategoryTotals,
   };
 
   res.json({ message: "Successful operation", data: statistics });
