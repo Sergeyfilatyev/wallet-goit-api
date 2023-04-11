@@ -4,6 +4,8 @@ const loginController = require("./loginController");
 const getCurrentUserController = require("./getCurrentUserController");
 const verifyController = require("./verifyController");
 const resendEmailController = require("./resendEmailController");
+const refreshController = require("./refreshController");
+
 
 module.exports = {
   logoutController,
@@ -12,4 +14,5 @@ module.exports = {
   getCurrentUserController,
   verifyController,
   resendEmailController,
+  refreshController,
 };

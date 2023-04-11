@@ -7,5 +7,6 @@
   { "id": "6", "category": "household products" },
   { "id": "7", "category": "education" },
   { "id": "8", "category": "eisure" },
-  { "id": "9", "category": "other expenses" }
+  { "id": "9", "category": "other expenses" },
+  { "id": "10", "category": "income" }
 ]

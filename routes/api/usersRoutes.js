@@ -7,6 +7,7 @@ const {
   getCurrentUserController,
   verifyController,
   resendEmailController,
+  refreshController,
 } = require("../../controllers/");
 const controllerWrapper = require("../../helpers/controllerWrapper");
 const { validateBody } = require("../../helpers");
@@ -39,6 +40,8 @@ router.post(
 
 router.get("/current", auth, controllerWrapper(getCurrentUserController));
 
-router.get("/logout", auth, controllerWrapper(logoutController));
+router.post("/logout", auth, controllerWrapper(logoutController));
+
+router.get("/refresh", auth, controllerWrapper(refreshController));
 
 module.exports = router;

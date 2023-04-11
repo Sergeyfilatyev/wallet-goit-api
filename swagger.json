@@ -21,6 +21,10 @@
   ],
   "tags": [
     {
+      "name": "Google Auth",
+      "description": "Authorization endpoints"
+    },
+    {
       "name": "Users",
       "description": "Authorization endpoints"
     },
@@ -38,6 +42,37 @@
     }
   ],
   "paths": {
+    "/api/auth/google": {
+      "get": {
+        "tags": ["Google Auth"],
+        "summary": "Google Auth",
+        "parameters": [],
+        "responses": {
+          "302": {
+            "description": "Redirects the user to the Google sign-in page",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "description": "This endpoint redirects the user to the Google sign-in page in order to authenticate. The redirect URL includes query parameters that specify the Google OAuth2 client ID, the redirect URI of the app's Google Auth Redirect endpoint, the scopes for which the app is requesting authorization, and the response type, access type, and prompt type for the authorization request."
+      }
+    },
+    "/api/auth/google-redirect": {
+      "get": {
+        "tags": ["Google Auth"],
+        "summary": "Google Auth Redirect",
+        "parameters": [],
+        "responses": {
+          "302": {
+            "description": "Redirects the user to the app after authenticating with Google",
+            "headers": {},
+            "content": {}
+          }
+        },
+        "description": "This endpoint is called after the user has authenticated with Google. It retrieves an authorization code from the query parameters, exchanges it for an access token using the Google OAuth2 API, and uses the access token to retrieve the user's email address from the Google UserInfo API. It then checks if a user with the given email address already exists in the database. If so, and the user is of type 'password auth', the user is redirected to the app's frontend. If the user exists and is of type 'google auth', their token and password are updated with the new access token. If the user does not exist, a new user is created in the database with the user's name, email, and access token, and the user is redirected to the app's frontend. The access token and name are included in the redirect URL as query parameters."
+      }
+    },
+
     "/api/users/register": {
       "post": {
         "tags": ["Users"],
@@ -295,15 +330,24 @@
     },
 
     "/api/users/logout": {
-      "get": {
+      "post": {
         "tags": ["Users"],
         "summary": "User logout",
+
         "security": [
           {
             "Bearer": []
           }
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "204": {
             "description": "Successful operation",
@@ -366,7 +410,15 @@
       "get": {
         "tags": ["Users"],
         "summary": "Current user",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -455,7 +507,15 @@
       "post": {
         "tags": ["Transactions"],
         "summary": "Create a new transaction",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -588,7 +648,15 @@
       "get": {
         "tags": ["Transactions"],
         "summary": "Get all transactions",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -711,6 +779,13 @@
             "required": true,
             "description": "Transaction ID",
             "name": "id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [
@@ -815,6 +890,13 @@
             "required": true,
             "description": "Transaction ID",
             "name": "id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [
@@ -948,6 +1030,13 @@
             "required": true,
             "description": "Transaction ID",
             "name": "id"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [
@@ -1028,6 +1117,15 @@
       "get": {
         "tags": ["Categories"],
         "summary": "Get all categories",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "security": [
           {
             "Bearer": []
@@ -1125,6 +1223,13 @@
             "in": "query",
             "description": "Month",
             "name": "month"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
           }
         ],
         "security": [

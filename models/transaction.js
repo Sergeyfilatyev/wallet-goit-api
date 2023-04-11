@@ -14,18 +14,21 @@ const transactionSchema = new Schema(
     },
     category: {
       type: String,
-      enum: [
-        "main expenses",
-        "products",
-        "car",
-        "self care",
-        "child care",
-        "household products",
-        "education",
-        "leisure",
-        "other expenses",
-      ],
-      default: "other expenses",
+      enum: {
+        values: [
+          "main expenses",
+          "products",
+          "car",
+          "self care",
+          "child care",
+          "household products",
+          "education",
+          "leisure",
+          "other expenses",
+          "income",
+        ],
+      },
+      default: "income",
     },
     comment: {
       type: String,

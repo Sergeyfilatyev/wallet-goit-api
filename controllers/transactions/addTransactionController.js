@@ -17,12 +17,13 @@ const addTransactionController = async (req, res) => {
   user.save();
 
   return res.status(201).json({
-    message: "Transaction success created",
+    message: "Transaction successfully created",
     data: {
       category: newTransaction.category,
       amount: newTransaction.amount,
       comment: newTransaction.comment,
       income: newTransaction.income,
+      balance: user.balance,
     },
   });
 };

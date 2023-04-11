@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+const {validateAccessToken} = require("../services");
 const { RequestError } = require("../helpers");
 
 const { User } = require("../models");
@@ -14,9 +14,9 @@ const auth = async (req, res, next) => {
       throw RequestError(401);
     }
     try {
-      const { id } = jwt.verify(token, SECRET_KEY);
+      const { id } = validateAccessToken(token);
       const user = await User.findById(id);
-      if (!user || !user.token || user.token !== token) {
+      if (!user || !user.token) {
         throw RequestError(401);
       }
       req.user = user;

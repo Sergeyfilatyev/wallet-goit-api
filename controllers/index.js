@@ -5,6 +5,7 @@ const {
   getCurrentUserController,
   verifyController,
   resendEmailController,
+  refreshController,
 } = require("./users");
 
 const {
@@ -35,4 +36,6 @@ module.exports = {
   googleRedirect,
   verifyController,
   resendEmailController,
+  refreshController,
+
 };

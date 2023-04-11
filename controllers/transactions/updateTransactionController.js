@@ -5,6 +5,8 @@ const updateTransactionController = async (req, res) => {
   const { transactionId: id } = req.params;
   const { _id: owner } = req.user;
 
+  let balance = 0;
+
   const transactionToUpdate = await Transaction.findOne({ _id: id, owner });
 
   const updatedTransaction = await Transaction.findOneAndUpdate(
@@ -29,6 +31,7 @@ const updateTransactionController = async (req, res) => {
           : transactionToUpdate.amount - updatedTransaction.amount;
 
       user.balance = user.balance + calculatedNumber;
+      balance = user.balance;
       user.save();
     }
 
@@ -43,6 +46,7 @@ const updateTransactionController = async (req, res) => {
           : 0;
 
       user.balance = user.balance + calculatedNumber;
+      balance = user.balance;
       user.save();
     }
 
@@ -54,16 +58,20 @@ const updateTransactionController = async (req, res) => {
           : transactionToUpdate.income === false &&
             updatedTransaction.income === true
           ? transactionToUpdate.amount + updatedTransaction.amount
-          : 0;
+          : transactionToUpdate.income === false &&
+            updatedTransaction.income === false
+          ? transactionToUpdate.amount - updatedTransaction.amount
+          : updatedTransaction.amount - transactionToUpdate.amount;
 
       user.balance = user.balance + calculatedNumber;
+      balance = user.balance;
       user.save();
     }
   }
 
   return res
     .status(200)
-    .json({ message: "Success update", data: updatedTransaction });
+    .json({ message: "Success update", data: updatedTransaction, balance });
 };
 
 module.exports = updateTransactionController;
