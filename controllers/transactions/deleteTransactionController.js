@@ -19,6 +19,7 @@ const deleteTransactionController = async (req, res) => {
 
   return res.status(200).json({
     message: "Transaction removed",
+    balance: user.balance,
   });
 };
 
