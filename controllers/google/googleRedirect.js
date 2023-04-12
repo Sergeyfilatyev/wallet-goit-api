@@ -36,6 +36,7 @@ const googleRedirect = async (req, res) => {
       type: "google auth",
     });
   }
+
   const payload = {
     id: user._id,
     name: userData.data.name,
@@ -43,18 +44,16 @@ const googleRedirect = async (req, res) => {
 
   const tokens = generateTokens(payload);
 
-  if (user && user.type === "password auth") {
-    return res.redirect(`${process.env.FRONTEND_URL}/google-auth`);
-  }
-  if (user && user.type === "google auth") {
-    await User.findByIdAndUpdate(user._id, { token: tokens.refreshToken });
-  }
+  user.token = tokens.refreshToken;
+  user.verify = true;
+  user.save();
+
   res.cookie("refreshToken", tokens.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   });
   return res.redirect(
-    `${process.env.FRONTEND_URL}/google-auth?token=${tokens.accessToken}&name=${userData.data.name}`
+    `${process.env.FRONTEND_URL}/dashboard?token=${tokens.accessToken}&name=${userData.data.name}`
   );
 };
 module.exports = googleRedirect;

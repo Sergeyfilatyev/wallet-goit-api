@@ -35,11 +35,11 @@ const refreshController = async (req, res) => {
 
   return res.status(200).json({
     message: "Refreshed successfully!",
-    token: tokens.accessToken,
     data: {
       id: userWithToken._id,
       name: userWithToken.name,
       email: userWithToken.email,
+      token: tokens.accessToken,
     },
   });
 };

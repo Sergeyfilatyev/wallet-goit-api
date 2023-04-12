@@ -11,7 +11,9 @@ const verifyController = async (req, res) => {
   await User.findByIdAndUpdate(user._id, {
     verify: true,
     verificationToken: "",
+    token,
   });
+
 
   const payload = {
     id: user._id,
@@ -36,6 +38,9 @@ const verifyController = async (req, res) => {
       token: tokens.accessToken,
     },
   });
+
+
+
 };
 
 module.exports = verifyController;
