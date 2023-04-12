@@ -10,9 +10,10 @@ const verifyController = async (req, res) => {
   await User.findByIdAndUpdate(user._id, {
     verify: true,
     verificationToken: "",
+    token,
   });
 
-  res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
+  res.redirect(`${process.env.FRONTEND_URL}/dashboard?token=${token}`);
 };
 
 module.exports = verifyController;
