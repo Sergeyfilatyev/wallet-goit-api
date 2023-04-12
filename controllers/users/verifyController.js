@@ -12,9 +12,7 @@ const verifyController = async (req, res) => {
     verificationToken: "",
   });
 
-  res.status(200).json({
-    message: "Email verify success",
-  });
+  res.redirect(`${process.env.FRONTEND_URL}/dashboard`);
 };
 
 module.exports = verifyController;

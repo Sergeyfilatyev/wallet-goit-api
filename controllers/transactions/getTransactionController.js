@@ -2,8 +2,10 @@ const { Transaction } = require("../../models");
 const { RequestError } = require("../../helpers");
 
 const getTransactionController = async (req, res) => {
-  const { id } = req.params;
-  const data = await Transaction.findOne({ _id: id });
+  const { transactionId: id } = req.params;
+  const { _id: owner } = req.user;
+  
+  const data = await Transaction.findOne({ _id: id, owner });
   if (!data) {
     throw RequestError(404, `id:${id} not found`);
   }
