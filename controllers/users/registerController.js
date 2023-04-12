@@ -55,7 +55,6 @@ const registerContoller = async (req, res) => {
       email: newUser.email,
       token: tokens.accessToken,
     },
-    access: tokens.accessToken,
   });
 };
 module.exports = registerContoller;
