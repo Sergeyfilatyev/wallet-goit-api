@@ -15,7 +15,7 @@ const refreshController = async (req, res) => {
   const userData = validateRefreshToken(refreshToken);
   const userWithToken = await User.findOne({ token: refreshToken });
 
-  if (!userData || !userWithToken) {
+  if (!userData || !userWithToken || !userWithToken.verify) {
     throw RequestError(401, "Unauthorized!");
   }
 
