@@ -124,7 +124,8 @@
                       "description": "responses data",
                       "example": {
                         "name": "User",
-                        "email": "user@mail.com"
+                        "email": "user@mail.com",
+                        "token": "access token"
                       }
                     }
                   }
@@ -242,18 +243,14 @@
                       "description": "responses message",
                       "example": "You have successfully logged in"
                     },
-                    "token": {
-                      "type": "string",
-                      "description": "User token",
-                      "example": "token"
-                    },
                     "data": {
                       "type": "object",
                       "description": "responses data",
                       "example": {
+                        "id": "User ID",
                         "email": "user@mail.com",
                         "name": "User",
-                        "id": "User ID"
+                        "token": "access token"
                       }
                     }
                   }
@@ -502,6 +499,178 @@
         }
       }
     },
+    "/api/users/verify": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Verify user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirects the user to the  client page",
+            "headers": {},
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/refresh": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Refresh token user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "Refreshed successfully!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "id": "643579cc338a23a05ccf7938",
+                        "email": "user@mail.com",
+                        "name": "User",
+                        "token": "access token"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User unauthorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Internal server error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
 
     "/api/transactions": {
       "post": {
@@ -536,7 +705,7 @@
                   },
                   "category": {
                     "type": "string",
-                    "example": "other expenses"
+                    "example": "income"
                   },
                   "comment": {
                     "type": "string",
@@ -571,7 +740,8 @@
                         "category": "other expenses",
                         "amount": 100500,
                         "commment": "Commentary transaction",
-                        "income": true
+                        "income": true,
+                        "balance": 10500
                       }
                     }
                   }
@@ -712,7 +882,12 @@
                       "comment": "Transactions comment",
                       "amount": 7000
                     }
-                  ]
+                  ],
+                  "balance": {
+                    "type": "string",
+                    "description": "balance",
+                    "example": "100500"
+                  }
                 }
               }
             }
@@ -965,6 +1140,11 @@
                         "createdAt": "2023-04-08T07:44:13.522Z",
                         "updatedAt": "2023-04-08T08:18:29.120Z"
                       }
+                    },
+                    "balance": {
+                      "type": "string",
+                      "description": "balance",
+                      "example": "100500"
                     }
                   }
                 }
@@ -1056,6 +1236,11 @@
                       "type": "string",
                       "description": "responses message",
                       "example": "Transaction removed"
+                    },
+                    "balance": {
+                      "type": "string",
+                      "description": "balance",
+                      "example": "1000"
                     }
                   }
                 }
@@ -1266,17 +1451,6 @@
                           "education": 1000,
                           "leisure": 1000,
                           "other expenses": 0
-                        },
-                        "incomeByCategory": {
-                          "main expenses": 0,
-                          "products": 0,
-                          "car": 500,
-                          "self care": 0,
-                          "child care": 0,
-                          "household products": 0,
-                          "education": 0,
-                          "leisure": 0,
-                          "other expenses": 500
                         }
                       }
                     }
@@ -1366,6 +1540,18 @@
             "type": "string",
             "example": "$2a$10$7/ZJpglAhQnMKAmshacmSe.Gx8pMni4jDIVPykJ9.gGobeZCsYqou"
           },
+          "type": {
+            "type": "string",
+            "example": "password auth"
+          },
+          "verify": {
+            "type": "boolean",
+            "example": true
+          },
+          "verificationToken": {
+            "type": "string",
+            "example": "verification token"
+          },
 
           "createdAt": {
             "type": "string",
@@ -1449,20 +1635,6 @@
             "example": 500
           },
           "expenseByCategory": {
-            "type": "Object",
-            "example": {
-              "main expenses": 0,
-              "products": 0,
-              "car": 0,
-              "self care": 0,
-              "child care": 0,
-              "household products": 0,
-              "education": 0,
-              "leisure": 0,
-              "other expenses": 0
-            }
-          },
-          "incomeByCategory": {
             "type": "Object",
             "example": {
               "main expenses": 0,
