@@ -54,7 +54,7 @@ const googleRedirect = async (req, res) => {
     httpOnly: true,
   });
   return res.redirect(
-    `${process.env.FRONTEND_URL}/google-auth?token=${tokens.accessToken}&name=${userData.data.name}`
+    `${process.env.FRONTEND_URL}/dashboard?token=${tokens.accessToken}&name=${userData.data.name}`
   );
 };
 module.exports = googleRedirect;
