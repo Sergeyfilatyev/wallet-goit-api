@@ -2,9 +2,8 @@ const { User } = require("../../models");
 const { RequestError } = require("../../helpers");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcryptjs");
-const { generateTokens } = require("../../services/tokenService");
 const { sendEmail, verificationEmail } = require("../../services/sendEmail");
-const { BASE_URL, USER_MAIL } = process.env;
+const { FRONTEND_URL, USER_MAIL } = process.env;
 
 const registerContoller = async (req, res) => {
   const { name, password, email } = req.body;
@@ -28,34 +27,17 @@ const registerContoller = async (req, res) => {
   const mailInfo = verificationEmail(
     email,
     verificationToken,
-    BASE_URL,
+    FRONTEND_URL,
     USER_MAIL
   );
   await sendEmail(mailInfo);
-
-  const payload = {
-    id: newUser._id,
-    name: newUser.name,
-  };
-
-  const tokens = generateTokens(payload);
-
-  newUser.token = tokens.refreshToken;
-  newUser.save();
-
-  res.cookie("refreshToken", tokens.refreshToken, {
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  });
 
   res.status(201).json({
     message: "User created",
     data: {
       name: newUser.name,
       email: newUser.email,
-      token: tokens.accessToken,
     },
-    access: tokens.accessToken,
   });
 };
 module.exports = registerContoller;

@@ -14,7 +14,7 @@ const loginController = async (req, res) => {
     throw RequestError(401, "Email or password is wrong");
   }
 
-  const passwordCompare = await bCrypt.compareSync(password, user.password);
+  const passwordCompare = bCrypt.compareSync(password, user.password);
 
   if (!user.verify) {
     throw RequestError(400, "User not verified!");
