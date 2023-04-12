@@ -41,11 +41,13 @@ const registerContoller = async (req, res) => {
   const tokens = generateTokens(payload);
 
   newUser.token = tokens.refreshToken;
+  newUser.save();
 
   res.cookie("refreshToken", tokens.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   });
+
   res.status(201).json({
     message: "User created",
     data: {
@@ -53,6 +55,7 @@ const registerContoller = async (req, res) => {
       email: newUser.email,
       token: tokens.accessToken,
     },
+    access: tokens.accessToken,
   });
 };
 module.exports = registerContoller;
