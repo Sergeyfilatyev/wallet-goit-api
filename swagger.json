@@ -440,7 +440,9 @@
                       "example": {
                         "email": "user@mail.com",
                         "name": "User",
-                        "balance": 100500
+                        "balance": 100500,
+                        "verify": true,
+                        "type": "password auth"
                       }
                     }
                   }
@@ -518,10 +520,31 @@
           }
         ],
         "responses": {
-          "302": {
-            "description": "Redirects the user to the  client page",
-            "headers": {},
-            "content": {}
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "responses message",
+                      "example": "User verifed"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "responses data",
+                      "example": {
+                        "email": "user@mail.com",
+                        "name": "User",
+                        "token": "access token"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Unauthorized",
