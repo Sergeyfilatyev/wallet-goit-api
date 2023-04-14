@@ -13,14 +13,14 @@ const categoriesRouter = require("./routes/api/categoriesRouter");
 const statisticsRouter = require("./routes/api/statisticsRouter");
 const googleAuthRouter = require("./routes/api/googleAuthRouter");
 
-const corsOptions ={
-  origin: process.env.FRONTEND_URL, 
-  credentials:true,
-  optionSuccessStatus:200
-}
+const corsOptions = {
+  origin: ["http://localhost:3000", "https://wallet-goit-fsv.netlify.app"],
+  credentials: true,
+  optionSuccessStatus: 200,
+};
 
 app.use(logger(formatsLogger));
-app.use(cors((corsOptions)));
+app.use(cors(corsOptions));
 app.use(cookieparser());
 app.use(express.json());
 app.use(express.static("public"));
