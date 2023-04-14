@@ -11,7 +11,7 @@ const verifyController = async (req, res) => {
   await User.findByIdAndUpdate(user._id, {
     verify: true,
     verificationToken: "",
-    token,
+    token: verificationToken,
   });
 
 

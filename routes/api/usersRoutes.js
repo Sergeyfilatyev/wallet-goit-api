@@ -42,6 +42,6 @@ router.get("/current", auth, controllerWrapper(getCurrentUserController));
 
 router.post("/logout", auth, controllerWrapper(logoutController));
 
-router.get("/refresh", auth, controllerWrapper(refreshController));
+router.get("/refresh", controllerWrapper(refreshController));
 
 module.exports = router;
