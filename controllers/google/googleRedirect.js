@@ -42,8 +42,6 @@ const googleRedirect = async (req, res) => {
   user.verificationToken = verificationToken;
   user.save();
 
-  return res.redirect(
-    `${process.env.FRONTEND_URL}/dashboard?token=${verificationToken}`
-  );
+  return res.redirect(`${process.env.FRONTEND_URL}?token=${verificationToken}`);
 };
 module.exports = googleRedirect;
