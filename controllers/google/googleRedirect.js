@@ -1,7 +1,7 @@
 const queryString = require("query-string");
 const axios = require("axios");
 const { User } = require("../../models");
-const { generateTokens } = require("../../services/tokenService");
+const { v4: uuidv4 } = require("uuid");
 
 const googleRedirect = async (req, res) => {
   const fullUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}`;
@@ -34,26 +34,16 @@ const googleRedirect = async (req, res) => {
       name: userData.data.name,
       email: userData.data.email,
       type: "google auth",
+      verify: false,
     });
   }
 
-  const payload = {
-    id: user._id,
-    name: userData.data.name,
-  };
-
-  const tokens = generateTokens(payload);
-
-  user.token = tokens.refreshToken;
-  user.verify = true;
+  const verificationToken = uuidv4();
+  user.verificationToken = verificationToken;
   user.save();
 
-  res.cookie("refreshToken", tokens.refreshToken, {
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  });
   return res.redirect(
-    `${process.env.FRONTEND_URL}/dashboard?token=${tokens.accessToken}&name=${userData.data.name}`
+    `${process.env.FRONTEND_URL}/dashboard?token=${verificationToken}`
   );
 };
 module.exports = googleRedirect;
