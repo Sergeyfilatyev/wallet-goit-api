@@ -24,6 +24,7 @@ app.use(cors(corsOptions));
 app.use(cookieparser());
 app.use(express.json());
 app.use(express.static("public"));
+app.set("trust proxy", true);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
