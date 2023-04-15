@@ -14,7 +14,6 @@ const verifyController = async (req, res) => {
     token: verificationToken,
   });
 
-
   const payload = {
     id: user._id,
     name: user.name,
@@ -28,6 +27,7 @@ const verifyController = async (req, res) => {
   res.cookie("refreshToken", tokens.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
+    secure: true,
   });
 
   res.status(200).json({
@@ -38,9 +38,6 @@ const verifyController = async (req, res) => {
       token: tokens.accessToken,
     },
   });
-
-
-
 };
 
 module.exports = verifyController;

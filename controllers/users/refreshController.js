@@ -31,6 +31,7 @@ const refreshController = async (req, res) => {
   res.cookie("refreshToken", tokens.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
+    secure: true,
   });
 
   return res.status(200).json({
