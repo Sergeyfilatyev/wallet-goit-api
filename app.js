@@ -24,6 +24,16 @@ app.use(cors(corsOptions));
 app.use(cookieparser());
 app.use(express.json());
 app.use(express.static("public"));
+app.use((req, res, next) => {
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://wallet-goit-fsv.netlify.app"
+  );
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
+  next();
+});
 app.set("trust proxy", true);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
