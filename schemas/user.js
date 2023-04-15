@@ -13,7 +13,7 @@ const registerUserSchema = Joi.object({
 
 const loginUserSchema = Joi.object({
   email: Joi.string().pattern(emailRegex).required(),
-  password: Joi.string().pattern(passRegex).required(),
+  password: Joi.string().required(),
 });
 
 const resendVerifEmail = Joi.object({
