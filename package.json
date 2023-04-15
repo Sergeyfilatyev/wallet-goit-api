@@ -19,6 +19,7 @@
     "dotenv": "^16.0.3",
     "express": "4.17.1",
     "express-async-handler": "^1.2.0",
+    "express-session": "^1.17.3",
     "gravatar": "^1.8.2",
     "jimp": "^0.22.7",
     "joi": "^17.7.1",

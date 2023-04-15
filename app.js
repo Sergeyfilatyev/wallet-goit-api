@@ -12,6 +12,7 @@ const swaggerDocument = require("./swagger.json");
 const categoriesRouter = require("./routes/api/categoriesRouter");
 const statisticsRouter = require("./routes/api/statisticsRouter");
 const googleAuthRouter = require("./routes/api/googleAuthRouter");
+const session = require("express-session");
 
 const corsOptions = {
   origin: ["http://localhost:3000", "https://wallet-goit-fsv.netlify.app"],
@@ -24,6 +25,13 @@ app.use(cors(corsOptions));
 app.use(cookieparser());
 app.use(express.json());
 app.use(express.static("public"));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",

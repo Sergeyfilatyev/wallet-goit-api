@@ -18,6 +18,7 @@ const loginController = async (req, res) => {
 
   if (!user.verify) {
     return res.status(400).json({
+      status: 400,
       email,
       message: "User not verified!",
     });
