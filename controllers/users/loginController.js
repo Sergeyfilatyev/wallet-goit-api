@@ -17,7 +17,10 @@ const loginController = async (req, res) => {
   const passwordCompare = bCrypt.compareSync(password, user.password);
 
   if (!user.verify) {
-    throw RequestError(400, "User not verified!");
+    return res.status(400).json({
+      email,
+      message: "User not verified!",
+    });
   }
 
   if (!user || !passwordCompare) {
