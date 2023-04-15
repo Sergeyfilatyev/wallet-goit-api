@@ -33,6 +33,7 @@ const registerContoller = async (req, res) => {
   await sendEmail(mailInfo);
 
   res.status(201).json({
+    status: 201,
     message: "User created",
     data: {
       name: newUser.name,
