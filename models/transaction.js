@@ -32,7 +32,7 @@ const transactionSchema = new Schema(
     },
     comment: {
       type: String,
-      default: "",
+      default: "comment",
     },
     date: {
       type: Object,
