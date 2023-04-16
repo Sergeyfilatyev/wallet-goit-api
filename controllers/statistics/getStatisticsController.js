@@ -16,9 +16,9 @@ const getStatisticsController = async (req, res) => {
 
   const filterData = data.filter(({ date }) => {
     if (!year || !month) {
-      return currentYear === date.year && currentMonth === date.month;
+      return currentYear === date.year && currentMonth === date.month - 1;
     } else {
-      return year === date.year && month - 1 === date.month;
+      return year === date.year && month === date.month;
     }
   });
 

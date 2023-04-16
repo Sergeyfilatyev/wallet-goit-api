@@ -39,7 +39,7 @@ const transactionSchema = new Schema(
       default: {
         time: now.getTime(),
         day: now.getDate(),
-        month: now.getMonth(),
+        month: now.getMonth() + 1,
         year: now.getFullYear(),
       },
     },
