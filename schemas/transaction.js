@@ -21,7 +21,7 @@ const addTransaction = Joi.object({
 
   comment: Joi.string().allow(""),
   date: Joi.object({
-    time: Joi.number(),
+    time: Joi.string(),
     day: Joi.number(),
     month: Joi.number(),
     year: Joi.number(),
@@ -48,7 +48,7 @@ const editTransaction = Joi.object({
   }),
   comment: Joi.string().allow(""),
   date: Joi.object({
-    time: Joi.number(),
+    time: Joi.string(),
     day: Joi.number(),
     month: Joi.number(),
     year: Joi.number(),
