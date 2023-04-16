@@ -19,7 +19,7 @@ const addTransaction = Joi.object({
     ),
   }),
 
-  comment: Joi.string(),
+  comment: Joi.string().allow(""),
   date: Joi.object({
     time: Joi.number(),
     day: Joi.number(),
@@ -46,7 +46,7 @@ const editTransaction = Joi.object({
       "other expenses"
     ),
   }),
-  comment: Joi.string(),
+  comment: Joi.string().allow(""),
   date: Joi.object({
     time: Joi.number(),
     day: Joi.number(),
