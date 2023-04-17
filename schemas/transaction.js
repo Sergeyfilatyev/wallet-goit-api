@@ -7,15 +7,15 @@ const addTransaction = Joi.object({
     is: true,
     then: Joi.string().valid("income").required(),
     otherwise: Joi.string().valid(
-      "main expenses",
+      "main",
       "products",
       "car",
       "self care",
-      "child care",
-      "household products",
+      "children",
+      "house",
       "education",
       "leisure",
-      "other expenses"
+      "other"
     ),
   }),
 
@@ -35,15 +35,15 @@ const editTransaction = Joi.object({
     is: true,
     then: Joi.string().valid("income").required(),
     otherwise: Joi.string().valid(
-      "main expenses",
+      "main",
       "products",
       "car",
       "self care",
-      "child care",
-      "household products",
+      "children",
+      "house",
       "education",
       "leisure",
-      "other expenses"
+      "other"
     ),
   }),
   comment: Joi.string().allow(""),
