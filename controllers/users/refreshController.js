@@ -13,7 +13,6 @@ const refreshController = async (req, res) => {
   }
 
   const userData = validateRefreshToken(refreshToken);
-  console.log(userData);
   const userWithToken = await User.findOne({ _id: userData.id });
 
   if (!userData || !userWithToken || !userWithToken.verify) {
