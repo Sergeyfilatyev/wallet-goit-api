@@ -1465,15 +1465,15 @@
                         "totalIncome": 1000,
                         "totalExpense": 5000,
                         "expenseByCategory": {
-                          "main expenses": 0,
+                          "main": 0,
                           "products": 1000,
                           "car": 0,
                           "self care": 1000,
-                          "child care": 0,
-                          "household products": 1000,
+                          "children": 0,
+                          "house": 1000,
                           "education": 1000,
                           "leisure": 1000,
-                          "other expenses": 0
+                          "other": 0
                         }
                       }
                     }
@@ -1660,15 +1660,15 @@
           "expenseByCategory": {
             "type": "Object",
             "example": {
-              "main expenses": 0,
+              "main": 0,
               "products": 0,
               "car": 0,
               "self care": 0,
-              "child care": 0,
-              "household products": 0,
+              "children": 0,
+              "house": 0,
               "education": 0,
               "leisure": 0,
-              "other expenses": 0
+              "other": 0
             }
           }
         }
