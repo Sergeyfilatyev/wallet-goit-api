@@ -1,18 +1,18 @@
 const { User } = require("../../models");
 const { RequestError } = require("../../helpers");
 const { sendEmail, verificationEmail } = require("../../services/sendEmail");
-const { BASE_URL, USER_MAIL } = process.env;
+const { FRONTEND_URL, USER_MAIL } = process.env;
 
 const resendEmailController = async (req, res) => {
   const { email } = req.body;
-  const user = User.findOne({ email });
+  const user = await User.findOne({ email });
   if (!user) {
     throw RequestError(404, "User not found");
   }
   const mailInfo = verificationEmail(
     email,
     user.verificationToken,
-    BASE_URL,
+    FRONTEND_URL,
     USER_MAIL
   );
   await sendEmail(mailInfo);
