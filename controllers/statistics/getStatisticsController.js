@@ -23,15 +23,15 @@ const getStatisticsController = async (req, res) => {
   });
 
   const categories = [
-    "main expenses",
+    "main",
     "products",
     "car",
     "self care",
-    "child care",
-    "household products",
+    "children",
+    "house",
     "education",
     "leisure",
-    "other expenses",
+    "other",
   ];
 
   const initialCategoryTotals = {};
